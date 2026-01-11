@@ -6,20 +6,23 @@
     <meta name="author" content="Weichen Zhou">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheet.css?v=1766582259">
-    <style>/
+    <style>
+        /* 核心布局：统一容器，确保对齐 */
         .main-container {
             width: 100%;
-            max-width: 1000px; 
+            max-width: 850px; /* 黄金宽度，确保不铺满全屏，保持精致感 */
             margin: 0 auto;
             padding: 20px;
             border-collapse: separate;
             border-spacing: 0px;
         }
 
+        /* 统一左侧对齐：所有表格单元格取消默认 padding，由容器统一控制 */
         td {
             padding: 0;
         }
 
+        /* 名字样式 */
         .name {
             font-size: 48px;
             font-weight: 700;
@@ -33,6 +36,7 @@
             margin-left: 10px;
         }
 
+        /* 正文样式 */
         .bio-text {
             font-size: 20px;
             line-height: 1.5;
@@ -40,6 +44,7 @@
             margin-bottom: 15px;
         }
 
+        /* 链接样式 */
         .profile-links {
             text-align: center;
             margin: 20px 0;
@@ -59,22 +64,23 @@
             margin-right: 5px;
         }
 
+        /* 板块标题样式：增加区分度 */
         .section-heading {
             font-size: 24px;
             font-weight: 700;
-            padding: 40px 0 10px 0; 
+            padding: 40px 0 10px 0; /* 增加上方间距以区分板块 */
             border-bottom: 1px solid #ddd;
             margin-bottom: 20px;
         }
 
-    
+        /* Publications 放大优化 */
         .pub-table {
             width: 100%;
             margin-bottom: 30px;
             border-spacing: 0px;
         }
         .pub-image-td {
-            width: 30%; 
+            width: 40%; /* 显著调大图片占比，使其更清晰醒目 */
             padding-right: 30px;
             vertical-align: middle;
         }
@@ -88,7 +94,7 @@
             transform: scale(1.02);
         }
         .pub-content-td {
-            width: 70%;
+            width: 60%;
             vertical-align: middle;
             font-size: 18px;
             line-height: 1.4;
@@ -99,6 +105,7 @@
             color: #222;
         }
 
+        /* 论文链接按钮 */
         .pub-links {
             margin-top: 10px;
         }
@@ -118,6 +125,7 @@
             border-color: #999;
         }
 
+        /* 荣誉与经历样式 */
         .award-item, .experience-item {
             display: flex;
             align-items: center;
@@ -148,7 +156,7 @@
                         <tr>
                             <td style="width:65%; vertical-align:middle; padding-right: 20px;">
                                 <div class="name">
-                                    Weichen Zhou <span class="name-cn">周蔚琛</span>
+                                    Weichen Zhou <span class="name-cn">周炜宸</span>
                                 </div>
                                 <div class="bio-text">
                                     Hi! I am a first-year Master's student at University of Toyama, advised by <a href="https://sites.google.com/view/chao-zhang/profile">Prof. Chao Zhang</a>. 
