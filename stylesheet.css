@@ -1,3 +1,9 @@
+/* ===================================
+   Academic Personal Homepage Stylesheet
+   A minimal, professional design for academic homepages
+   =================================== */
+
+/* === Font Imports - Lato === */
 /* latin-ext */
 @font-face {
   font-family: 'Lato';
@@ -6,6 +12,7 @@
   src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v15/S6u8w4BMUTPHjxsAUi-qNiXg7eU0.woff2) format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 /* latin */
 @font-face {
   font-family: 'Lato';
@@ -14,6 +21,7 @@
   src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v15/S6u8w4BMUTPHjxsAXC-qNiXg7Q.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
 /* latin-ext */
 @font-face {
   font-family: 'Lato';
@@ -22,6 +30,7 @@
   src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v15/S6u_w4BMUTPHjxsI5wq_FQftx9897sxZ.woff2) format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 /* latin */
 @font-face {
   font-family: 'Lato';
@@ -30,6 +39,7 @@
   src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v15/S6u_w4BMUTPHjxsI5wq_Gwftx9897g.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
 /* latin-ext */
 @font-face {
   font-family: 'Lato';
@@ -38,6 +48,7 @@
   src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v15/S6uyw4BMUTPHjxAwXiWtFCfQ7A.woff2) format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 /* latin */
 @font-face {
   font-family: 'Lato';
@@ -46,6 +57,7 @@
   src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v15/S6uyw4BMUTPHjx4wXiWtFCc.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
 /* latin-ext */
 @font-face {
   font-family: 'Lato';
@@ -54,6 +66,7 @@
   src: local('Lato Bold'), local('Lato-Bold'), url(https://fonts.gstatic.com/s/lato/v15/S6u9w4BMUTPHh6UVSwaPGQ3q5d0N7w.woff2) format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 /* latin */
 @font-face {
   font-family: 'Lato';
@@ -63,6 +76,27 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* === Base Styles === */
+body {
+  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.4em;
+  color: #333;
+  background-color: #ffffff;
+}
+
+td, th, tr, p, a {
+  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.4em;
+}
+
+strong {
+  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 15px;
+}
+
+/* === Links === */
 a {
   color: #1772d0;
   text-decoration: none;
@@ -74,41 +108,418 @@ a:hover {
   text-decoration: none;
 }
 
-body,
-td,
-th,
-tr,
-p,
-a {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
-strong {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
+/* === Typography === */
 h2 {
-  margin: 0;
-  font-weight: normal;
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 22px;
+  margin: 0 0 0.6em 0;
+  font-weight: 600;
+  color: #222;
+}
+
+.heading {
+  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
   font-size: 22px;
 }
 
+/* === Paper Title === */
 .papertitle {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
+  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 15px;
   font-weight: 700;
+  color: #222;
+  line-height: 1.3;
 }
 
 .name {
-  padding-top: 20px;
-  margin: 0;
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
   font-size: 32px;
+  padding-top: 15px;
+  color: #222;
+  font-weight: 700;
 }
 
+/* === Pre/Code === */
+pre {
+  overflow-x: auto;
+  text-align: left;
+  border: 0.5px solid rgb(215, 215, 215);
+  border-radius: 6px;
+  background: rgba(239,239,239,0.6);
+  padding: 5px 5px 5px 10px;
+  line-height: 1.2;
+  white-space: pre-wrap;
+}
+
+/* === Button === */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 15px;
+  color: #1772d0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:hover {
+  color: #f09228;
+  text-decoration: none;
+}
+
+/* === Profile Section === */
+.profile-container {
+  padding: 20px 0;
+  margin-bottom: 30px;
+}
+
+.profile-text p {
+  text-align: justify;
+  line-height: 1.5;
+  color: #374151;
+  margin-bottom: 0.8em;
+}
+
+.profile-text p:first-of-type {
+  margin-top: 0.2em;
+}
+
+.profile-links {
+  margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.profile-links a {
+  color: #1772d0 !important;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: none;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.profile-links a svg {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4px;
+  width: 16px;
+  height: 16px;
+  fill: #1772d0 !important;
+  transition: all 0.3s ease;
+}
+
+.profile-links a:hover {
+  color: #f09228 !important;
+  background: rgba(240, 146, 40, 0.08);
+  transform: translateY(-1px);
+}
+
+.profile-links a:hover svg {
+  fill: #f09228 !important;
+  transform: scale(1.1);
+}
+
+.profile-image-wrapper {
+  position: relative;
+}
+
+.profile-image-wrapper img {
+  border: 4px solid #f3f4f6;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.profile-image-wrapper img:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* === Publications Section === */
+.publications-header {
+  margin: 10px 0 10px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.publications-header h2 {
+  margin-bottom: 6px;
+  color: #111827;
+}
+
+.publications-header p {
+  color: #6b7280;
+  font-size: 13px;
+  margin: 0;
+  font-style: italic;
+}
+
+.publication-item {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s ease;
+}
+
+.publication-item:last-child {
+  border-bottom: none;
+}
+
+.publication-item:hover {
+  background-color: #fafafa;
+  border-radius: 8px;
+  margin: 0 -10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.publication-teaser {
+  flex-shrink: 0;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.publication-teaser img,
+.publication-teaser video {
+  max-width: 200px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  display: block;
+}
+
+.publication-content {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.publication-content em {
+  color: #333;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.publication-venue {
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+  font-style: normal;
+}
+
+.publication-highlight {
+  margin-top: 8px;
+  padding: 6px 10px;
+  background-color: #fef3c7;
+  border-left: 3px solid #f59e0b;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.publication-highlight strong {
+  color: #92400e;
+  font-weight: 600;
+}
+
+.publication-links {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.publication-links a {
+  font-size: 14px;
+  color: #374151;
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid #e5e7eb;
+  padding: 5px 12px;
+  background: #f9fafb;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+.publication-links a:hover {
+  color: #111827;
+  background: #e5e7eb;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.publication-links span {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* === Honors Section === */
+.honors-header {
+  margin: 30px 0 15px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.experience-header {
+  margin: 35px 0 18px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.honors-header h2,
+.experience-header h2 {
+  color: #111827;
+  display: inline-block;
+}
+
+.section-emoji {
+  font-size: 28px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Award items - compact design */
+.award-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.award-item:last-child {
+  border-bottom: none;
+}
+
+.award-icon-wrapper {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.award-content {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.award-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #111827;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.award-details {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* === Experience Section === */
+.experience-item {
+  padding: 18px 0;
+  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.2s ease;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.experience-item:last-child {
+  border-bottom: none;
+}
+
+.experience-item:hover {
+  background-color: #fafafa;
+  border-radius: 8px;
+  margin: 0 -10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.experience-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  background-color: #ffffff;
+}
+
+.experience-content {
+  flex: 1;
+}
+
+.experience-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.experience-role {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 3px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.experience-period {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 8px;
+  background-color: #f3f4f6;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.experience-advisor {
+  color: #6b7280;
+  font-size: 13px;
+  margin-top: 3px;
+  line-height: 1.3;
+}
+
+.experience-advisor a {
+  color: #4b5563;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.experience-advisor a:hover {
+  color: #1772d0;
+  border-bottom-color: #f09228;
+}
+
+/* === Image Transitions === */
 .one {
   width: 160px;
   height: 160px;
@@ -130,13 +541,57 @@ h2 {
   -webkit-transition: opacity .2s ease-in-out;
 }
 
-span.highlight {
-  background-color: #ffffd0;
+/* === Utilities === */
+.hoverZoomLink {
+  display: inline-block;
 }
 
-.colored-box {
-    color: black;
-    padding: 20px;
-    display: inline-block;
-    border-radius: 10px;
+.highlight,
+span.highlight {
+  background-color: #ffffd0;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.code-card {
+  background-color: rgba(239,239,239,0.66);
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
+  h2 {
+    font-size: 20px;
+  }
+  
+  .name {
+    font-size: 28px;
+  }
+  
+  .publication-item,
+  .experience-item {
+    flex-direction: column;
+  }
+  
+  .publication-teaser img,
+  .publication-teaser video {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .publication-links {
+    gap: 10px;
+  }
+  
+  .award-content {
+    gap: 15px;
+  }
+  
+  .experience-logo {
+    width: 50px;
+    height: 50px;
+  }
 }
