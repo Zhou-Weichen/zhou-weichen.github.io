@@ -5,195 +5,206 @@
     <title>Weichen Zhou</title>
     <meta name="author" content="Weichen Zhou">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
     <link rel="stylesheet" type="text/css" href="stylesheet.css?v=1766582259">
-    
     <style>
-
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
+        .container-table {
+            width: 100%;
+            max-width: 1200px; 
+            border: 0px;
+            border-spacing: 0px;
+            border-collapse: separate;
+            margin-right: auto;
+            margin-left: auto;
         }
 
-        .main-wrapper {
-            width: 85%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px 0;
+        .profile-links svg {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            fill: #1772d0;
+            margin-right: 4px;
         }
 
-
-        .profile-links a svg {
-            width: 20px !important;
-            height: 20px !important;
-            min-width: 20px;
-        }
-        
-        @media screen and (max-width: 800px) {
-            .main-wrapper {
-                width: 95%;
-            }
-            .publication-item {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .publication-teaser {
-                width: 100%;
-                text-align: center;
-            }
-            .publication-teaser img {
-                max-width: 100%;
-            }
+        .profile-links a {
+            text-decoration: none;
+            color: #1772d0;
+            display: inline-flex;
+            align-items: center;
+            font-size: 16px;
         }
 
+        .pub-table {
+            width: 100%;
+            border: 0px;
+            border-spacing: 0px;
+            border-collapse: separate;
+            margin-right: auto;
+            margin-left: auto;
+        }
 
-        table {
-            width: 100% !important;
-            border-collapse: collapse;
+        .pub-image-td {
+            padding: 20px;
+            width: 25%;
+            vertical-align: middle;
+        }
+
+        .pub-image-td img {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .pub-content-td {
+            padding: 20px;
+            width: 75%;
+            vertical-align: middle;
+        }
+
+        .papertitle {
+            font-weight: 700;
+        }
+
+        .pub-links a {
+            display: inline-block;
+            padding: 2px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #444;
+            text-decoration: none;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+
+        .pub-links a:hover {
+            background-color: #f5f5f5;
         }
     </style>
 </head>
 
 <body>
-    <div class="main-wrapper">
-        <!-- Profile Section -->
-        <div class="profile-container">
-            <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;">
-                <tbody>
-                    <tr style="padding:0px">
-                        <td style="padding:2.5%;width:63%;vertical-align:middle" class="profile-text">
-                            <p class="name" style="text-align: center;">
-                                Weichen Zhou
-                            </p>
-                            <p>
-                                Hi! I am a first-year Master's student at University of Toyama, advised by <a href="https://sites.google.com/view/chao-zhang/profile">Prof. Chao Zhang</a>. 
-                                I received my Bachelor's degree from Shenzhen Technology University in 2025.
-                            </p>
-                            <p>
-                                My research interests lie in unlocking the unknown potential of models for various computer vision tasks, including <strong>image generation</strong> and <strong>data distillation</strong>. I am also very interested in the intersection of <strong>AI+health/robotics</strong>, specifically in areas like medical image analysis and robot learning.
-                            </p>
-                            
-                            <div style="text-align:center" class="profile-links">
-                                <a href="mailto:zweic008@gmail.com">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
-                                    </svg>
-                                    <span>Email</span>
-                                </a>
-                                
-                                <a href="https://scholar.google.com/citations?user=cIKyXT8AAAAJ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                        <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.5 3.5L12 8.5l7.5 4.5L24 9.5z"/>
-                                    </svg>
-                                    <span>Scholar</span>
-                                </a>
-                    
-                                <a href="https://github.com/Zhou-Weichen/">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-                                    </svg>
-                                    <span>Github</span>
-                                </a>
-                            </div>
-                        </td>
-                        <td style="padding:2.5%;width:37%;max-width:37%">
-                            <div class="profile-image-wrapper">
-                                <a href="images/Photo/me.jpg"><img style="width:100%;max-width:100%;object-fit: cover; border-radius: 50%;" alt="profile photo" src="images/Photo/me.jpg"></a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <table class="container-table">
+        <tbody>
+            <tr style="padding:0px">
+                <td style="padding:0px">
+                    <!-- Profile Section -->
+                    <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+                        <tbody>
+                            <tr style="padding:0px">
+                                <td style="padding:2.5%;width:63%;vertical-align:middle">
+                                    <p class="name" style="text-align: center;">
+                                        Weichen Zhou <span style="font-family: 'STKaiti', 'KaiTi', serif; font-weight: normal;">周炜宸</span>
+                                    </p>
+                                    <p>
+                                        Hi! I am a first-year Master's student at University of Toyama, advised by <a href="https://sites.google.com/view/chao-zhang/profile">Prof. Chao Zhang</a>. 
+                                        I received my Bachelor's degree from Shenzhen Technology University in 2025.
+                                    </p>
+                                    <p>
+                                        My research interests lie in unlocking the unknown potential of models for various computer vision tasks, including <strong>image generation</strong> and <strong>data distillation</strong>. I am also very interested in the intersection of <strong>AI+health/robotics</strong>, specifically in areas like medical image analysis and robot learning.
+                                    </p>
+                                    
+                                    <p style="text-align:center" class="profile-links">
+                                        <a href="mailto:zweic008@gmail.com">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/></svg>
+                                            Email
+                                        </a> &nbsp;/&nbsp;
+                                        <a href="https://scholar.google.com/citations?user=cIKyXT8AAAAJ">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.5 3.5L12 8.5l7.5 4.5L24 9.5z"/></svg>
+                                            Scholar
+                                        </a> &nbsp;/&nbsp;
+                                        <a href="https://github.com/Zhou-Weichen/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                                            Github
+                                        </a>
+                                    </p>
+                                </td>
+                                <td style="padding:2.5%;width:37%;max-width:37%">
+                                    <a href="images/Photo/me.jpg"><img style="width:100%;max-width:100%;object-fit: cover; border-radius: 50%; border: 1px solid #eee;" alt="profile photo" src="images/Photo/me.jpg"></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-        <!-- Publications Section -->
-        <div class="publications-header">
-            <h2>Publications</h2>
-            <p>* denotes equal contributions.</p>
-        </div>
-        
-        <div class="publication-item">
-            <div class="publication-teaser">
-                <img src="images/pub/TailoredMRI.png" alt="TailoredMRI">
-            </div>
-            <div class="publication-content">
-                <span class="papertitle">Tailored self-supervised pretraining improves brain MRI diagnostic models</span>
-                <br>
-                Xinhao Huang, Zihao Wang, <strong>Weichen Zhou</strong>, Kexin Yang, Kaihua Wen, Haiguang Liu, Shoujin Huang , Mengye Lyu
-                <br>
-                <span class="publication-venue"><em>Computerized Medical Imaging and Graphics</em></span>
-                <div class="publication-links">
-                    <a href="https://www.sciencedirect.com/science/article/pii/S0895611125000692" target="_blank">Paper</a>
-                </div>
-            </div>
-        </div>
+                    <!-- Publications Section -->
+                    <table class="pub-table">
+                        <tbody>
+                            <tr>
+                                <td style="padding:20px;width:100%;vertical-align:middle">
+                                    <heading>Publications</heading>
+                                    <p style="font-size: 14px; color: #666; font-style: italic; margin-top: 5px;">* denotes equal contributions.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-        <!-- Honors Section -->
-        <div class="honors-header">
-            <h2>Honors & Awards</h2>
-        </div>
-        
-        <div class="award-item">
-            <div class="award-icon-wrapper">🎓</div>
-            <div class="award-content">
-                <div class="award-title">National Scholarship</div>
-                <div class="award-details">2025</div>
-            </div>
-        </div>
-        
-        <div class="award-item">
-            <div class="award-icon-wrapper">🏅</div>
-            <div class="award-content">
-                <div class="award-title">Gold Medal in <a href="https://www.kaggle.com/competitions/image-matching-challenge-2024" target="_blank">Image Matching Challenge 2024</a>, <a href="https://www.youtube.com/watch?v=KG-_i12fU_A&t=14889s" target="_blank">CVPR 2024 Workshop</a></div>
-                <div class="award-details">2024</div>
-            </div>
-        </div>
-        
-        <div class="award-item">
-            <div class="award-icon-wrapper">🥇</div>
-            <div class="award-content">
-                <div class="award-title">First Prize in the Chinese Mathematics Competitions</div>
-                <div class="award-details">2023</div>
-            </div>
-        </div>
+                    <table class="pub-table">
+                        <tbody>
+                            <tr>
+                                <td class="pub-image-td">
+                                    <img src="images/pub/TailoredMRI.png" alt="TailoredMRI">
+                                </td>
+                                <td class="pub-content-td">
+                                    <a href="https://www.sciencedirect.com/science/article/pii/S0895611125000692">
+                                        <span class="papertitle">Tailored self-supervised pretraining improves brain MRI diagnostic models</span>
+                                    </a>
+                                    <br>
+                                    Xinhao Huang, Zihao Wang, <strong>Weichen Zhou</strong>, Kexin Yang, Kaihua Wen, Haiguang Liu, Shoujin Huang, Mengye Lyu
+                                    <br>
+                                    <em>Computerized Medical Imaging and Graphics</em>, 2025
+                                    <br>
+                                    <div class="pub-links">
+                                        <a href="https://www.sciencedirect.com/science/article/pii/S0895611125000692">Paper</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-        <!-- Experience Section -->
-        <div class="experience-header">
-            <h2>Experience</h2>
-        </div>
-        
-        <div class="experience-item">
-            <img src="images/icons/MGI-TECH.png" class="experience-logo" alt="MGI-tech">
-            <div class="experience-content">
-                <div class="experience-title">MGI, X R&D Department</div>
-                <div class="experience-role">Research Intern</div>
-                <span class="experience-period">May. 2025 - Sep. 2025</span>
-            </div>
-        </div>
+                    <!-- Experience Section -->
+                    <table class="pub-table">
+                        <tbody>
+                            <tr>
+                                <td style="padding:20px;width:100%;vertical-align:middle">
+                                    <heading>Experience</heading>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-        <!-- Footer -->
-        <div style="margin-top: 50px; padding-bottom: 20px;">
-            <p style="text-align:right;font-size:small;color:#666;">
-                The website template was borrowed from <a href="https://jonbarron.info/">Jon Barron</a>.
-            </p>
-        </div>
-    </div>
+                    <table class="pub-table">
+                        <tbody>
+                            <tr>
+                                <td style="padding:20px;width:25%;vertical-align:middle;text-align:center;">
+                                    <img src="images/icons/MGI-TECH.png" style="width:80px; border-radius: 8px;">
+                                </td>
+                                <td style="padding:20px;width:75%;vertical-align:middle">
+                                    <strong>MGI, X R&D Department</strong>
+                                    <br>
+                                    Research Intern
+                                    <br>
+                                    May. 2025 - Sep. 2025
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-    <!-- Statcounter -->
-    <script type="text/javascript">
-        var sc_project=13072472; 
-        var sc_invisible=1; 
-        var sc_security="98024855"; 
-    </script>
-    <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
-    <noscript>
-        <div class="statcounter">
-            <a title="Web Analytics Made Easy - Statcounter" href="https://statcounter.com/" target="_blank">
-                <img class="statcounter" src="https://c.statcounter.com/13072472/0/98024855/1/" alt="Web Analytics Made Easy - Statcounter" referrerPolicy="no-referrer-when-downgrade">
-            </a>
-        </div>
-    </noscript>
+                    <!-- Footer -->
+                    <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+                        <tbody>
+                            <tr>
+                                <td style="padding:0px">
+                                    <br>
+                                    <p style="text-align:right;font-size:small;">
+                                        The website template was borrowed from <a href="https://jonbarron.info/">Jon Barron</a>.
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
