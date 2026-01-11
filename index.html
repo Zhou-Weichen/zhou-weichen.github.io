@@ -6,257 +6,241 @@
     <meta name="author" content="Weichen Zhou">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheet.css?v=1766582259">
-    <style>
-        .container-table {
+    <style>/
+        .main-container {
             width: 100%;
-            max-width: 1200px; 
-            border: 0px;
-            border-spacing: 0px;
+            max-width: 1000px; 
+            margin: 0 auto;
+            padding: 20px;
             border-collapse: separate;
-            margin-right: auto;
-            margin-left: auto;
+            border-spacing: 0px;
         }
 
-        .profile-links svg {
-            width: 16px;
-            height: 16px;
-            vertical-align: middle;
-            fill: #1772d0;
-            margin-right: 4px;
+        td {
+            padding: 0;
         }
 
+        .name {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .name-cn {
+            font-family: 'STKaiti', 'KaiTi', serif;
+            font-weight: normal;
+            font-size: 36px;
+            margin-left: 10px;
+        }
+
+        .bio-text {
+            font-size: 20px;
+            line-height: 1.5;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        .profile-links {
+            text-align: center;
+            margin: 20px 0;
+        }
         .profile-links a {
             text-decoration: none;
             color: #1772d0;
             display: inline-flex;
             align-items: center;
-            font-size: 16px;
+            font-size: 18px;
+            margin: 0 10px;
+        }
+        .profile-links svg {
+            width: 18px;
+            height: 18px;
+            fill: #1772d0;
+            margin-right: 5px;
         }
 
+        .section-heading {
+            font-size: 24px;
+            font-weight: 700;
+            padding: 40px 0 10px 0; 
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+    
         .pub-table {
             width: 100%;
-            border: 0px;
+            margin-bottom: 30px;
             border-spacing: 0px;
-            border-collapse: separate;
-            margin-right: auto;
-            margin-left: auto;
         }
-
         .pub-image-td {
-            padding: 20px;
-            width: 25%;
+            width: 30%; 
+            padding-right: 30px;
             vertical-align: middle;
         }
-
         .pub-image-td img {
             width: 100%;
-            max-width: 100%;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
         }
-
+        .pub-image-td img:hover {
+            transform: scale(1.02);
+        }
         .pub-content-td {
-            padding: 20px;
-            width: 75%;
+            width: 70%;
             vertical-align: middle;
+            font-size: 18px;
+            line-height: 1.4;
         }
-
         .papertitle {
             font-weight: 700;
+            font-size: 20px;
+            color: #222;
         }
 
+        .pub-links {
+            margin-top: 10px;
+        }
         .pub-links a {
             display: inline-block;
-            padding: 2px 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 4px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             font-size: 14px;
-            color: #444;
+            color: #555;
             text-decoration: none;
-            margin-right: 5px;
-            margin-top: 5px;
+            margin-right: 8px;
+            background: #f9f9f9;
+        }
+        .pub-links a:hover {
+            background: #eee;
+            border-color: #999;
         }
 
-        .pub-links a:hover {
-            background-color: #f5f5f5;
+        .award-item, .experience-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .award-icon {
+            font-size: 24px;
+            margin-right: 20px;
+            width: 30px;
+            text-align: center;
+        }
+        .experience-logo {
+            width: 80px;
+            margin-right: 25px;
+            border-radius: 10px;
         }
     </style>
 </head>
 
 <body>
-    <table class="container-table">
+    <table class="main-container">
         <tbody>
-            <tr style="padding:0px">
-                <td style="padding:0px">
+            <tr>
+                <td>
                     <!-- Profile Section -->
-                    <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-                        <tbody>
-                            <tr style="padding:0px">
-                                <td style="padding:2.5%;width:63%;vertical-align:middle">
-                                    <p class="name" style="text-align: center; font-size: 48px; margin-bottom: 10px;">
-                                        Weichen Zhou <span style="font-family: 'STKaiti', 'KaiTi', serif; font-weight: normal;">周蔚琛</span>
-                                    </p>
-                                    <p style="font-size: 20px">
-                                        Hi! I am a first-year Master's student at University of Toyama, advised by <a href="https://sites.google.com/view/chao-zhang/profile">Prof. Chao Zhang</a>. 
-                                        I received my Bachelor's degree from Shenzhen Technology University in 2025.
-                                    </p>
-                                    <p style="font-size: 20px">
-                                        My research interests lie in unlocking the unknown potential of models for various computer vision tasks, including <strong>image generation</strong> and <strong>data distillation</strong>. I am also very interested in the intersection of <strong>AI+health/robotics</strong>, specifically in areas like medical image analysis and robot learning.
-                                    </p>
-                                    
-                                    <p style="text-align:center" class="profile-links">
-                                        <a href="mailto:zweic008@gmail.com">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/></svg>
-                                            Email
-                                        </a> &nbsp;/&nbsp;
-                                        <a href="https://scholar.google.com/citations?user=cIKyXT8AAAAJ">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.5 3.5L12 8.5l7.5 4.5L24 9.5z"/></svg>
-                                            Scholar
-                                        </a> &nbsp;/&nbsp;
-                                        <a href="https://github.com/Zhou-Weichen/">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-                                            Github
-                                        </a>
-                                    </p>
-                                </td>
-                                <td style="padding:2.5%;width:37%;max-width:37%">
-                                    <a href="images/Photo/me.jpg"><img style="width:100%;max-width:100%;object-fit: cover; border-radius: 50%; border: 1px solid #eee;" alt="profile photo" src="images/Photo/me.jpg"></a>
-                                </td>
-                            </tr>
-                        </tbody>
+                    <table style="width:100%; margin-bottom: 20px;">
+                        <tr>
+                            <td style="width:65%; vertical-align:middle; padding-right: 20px;">
+                                <div class="name">
+                                    Weichen Zhou <span class="name-cn">周蔚琛</span>
+                                </div>
+                                <div class="bio-text">
+                                    Hi! I am a first-year Master's student at University of Toyama, advised by <a href="https://sites.google.com/view/chao-zhang/profile">Prof. Chao Zhang</a>. 
+                                    I received my Bachelor's degree from Shenzhen Technology University in 2025.
+                                </div>
+                                <div class="bio-text">
+                                    My research interests lie in unlocking the unknown potential of models for various computer vision tasks, including <strong>image generation</strong> and <strong>data distillation</strong>. I am also very interested in the intersection of <strong>AI+health/robotics</strong>, specifically in areas like medical image analysis and robot learning.
+                                </div>
+                                <div class="profile-links">
+                                    <a href="mailto:zweic008@gmail.com">
+                                        <svg viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/></svg>
+                                        Email
+                                    </a>
+                                    <a href="https://scholar.google.com/citations?user=cIKyXT8AAAAJ">
+                                        <svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.5 3.5L12 8.5l7.5 4.5L24 9.5z"/></svg>
+                                        Scholar
+                                    </a>
+                                    <a href="https://github.com/Zhou-Weichen/">
+                                        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                                        Github
+                                    </a>
+                                </div>
+                            </td>
+                            <td style="width:35%; vertical-align:middle;">
+                                <img src="images/Photo/me.jpg" style="width:100%; border-radius: 50%; border: 5px solid #f5f5f5; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                            </td>
+                        </tr>
                     </table>
 
                     <!-- Publications Section -->
+                    <div class="section-heading">Publications</div>
+                    <p style="font-size: 14px; color: #666; font-style: italic; margin-bottom: 20px;">* denotes equal contributions.</p>
+                    
                     <table class="pub-table">
-                        <tbody>
-                            <tr>
-                                <td style="padding:20px;width:100%;vertical-align:middle">
-                                    <heading>Publications</heading>
-                                    <p style="font-size: 14px; color: #666; font-style: italic; margin-top: 5px;">* denotes equal contributions.</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="pub-table">
-                        <tbody>
-                            <tr>
-                                <td class="pub-image-td">
-                                    <img src="images/pub/TailoredMRI.png" alt="TailoredMRI">
-                                </td>
-                                <td class="pub-content-td">
-                                    <a href="https://www.sciencedirect.com/science/article/pii/S0895611125000692">
-                                        <span class="papertitle">Tailored self-supervised pretraining improves brain MRI diagnostic models</span>
-                                    </a>
-                                    <br>
-                                    Xinhao Huang, Zihao Wang, <strong>Weichen Zhou</strong>, Kexin Yang, Kaihua Wen, Haiguang Liu, Shoujin Huang, Mengye Lyu
-                                    <br>
-                                    <em>Computerized Medical Imaging and Graphics</em>, 2025
-                                    <br>
-                                    <div class="pub-links">
-                                        <a href="https://www.sciencedirect.com/science/article/pii/S0895611125000692">Paper</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tr>
+                            <td class="pub-image-td">
+                                <img src="images/pub/TailoredMRI.png" alt="TailoredMRI">
+                            </td>
+                            <td class="pub-content-td">
+                                <div class="papertitle">Tailored self-supervised pretraining improves brain MRI diagnostic models</div>
+                                Xinhao Huang, Zihao Wang, <strong>Weichen Zhou</strong>, Kexin Yang, Kaihua Wen, Haiguang Liu, Shoujin Huang, Mengye Lyu
+                                <br>
+                                <em>Computerized Medical Imaging and Graphics</em>, 2025
+                                <div class="pub-links">
+                                    <a href="https://www.sciencedirect.com/science/article/pii/S0895611125000692" target="_blank">Paper</a>
+                                </div>
+                            </td>
+                        </tr>
                     </table>
 
                     <!-- Honors Section -->
-                      <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-                        <tbody>
-                          <tr>
-                            <td colspan="2" style="padding:0;">
-                              <div class="honors-header">
-                                <h2>Honors & Awards</h2>
-                              </div>
-                            </td>
-                          </tr>
-                          
-                          <tr>
-                            <td colspan="2" style="padding:0;">
-                              <div class="award-item">
-                                <div class="award-icon-wrapper">
-                                 🥉
-                                </div>
-                                <div class="award-content">
-                                  <div class="award-title">Third Place in <a href="https://www.synapse.org/Synapse:syn55249552/wiki/629023" target="_blank">Low field pediatric brain magnetic resonance Image Segmentation</a>, MICCAI 2024 Workshop</div>
-                                  <div class="award-details">2024</div>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          
-                          <tr>
-                            <td colspan="2" style="padding:0;">
-                              <div class="award-item">
-                                <div class="award-icon-wrapper">
-                                 🏅
-                                </div>
-                                <div class="award-content">
-                                  <div class="award-title">Fifth place in <a href="https://codalab.lisn.upsaclay.fr/competitions/9804" target="_blank">Cerebral Artery Segmentation Challenge (CAS2023)</a>, MICCAI 2023</div>
-                                  <div class="award-details">2023</div>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          
-                          <tr>
-                            <td colspan="2" style="padding:0;">
-                              <div class="award-item">
-                                <div class="award-icon-wrapper">
-                                  🥇
-                                </div>
-                                <div class="award-content">
-                                  <div class="award-title">First Prize in the Chinese Mathematics Competitions</div>
-                                  <div class="award-details">2023</div>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                                
-                    <!-- Experience Section -->
-                    <table class="pub-table">
-                        <tbody>
-                            <tr>
-                                <td style="padding:20px;width:100%;vertical-align:middle">
-                                    <heading>Experience</heading>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="section-heading">Honors & Awards</div>
+                    <div class="award-item">
+                        <div class="award-icon">🥉</div>
+                        <div style="flex:1; font-size: 18px;">
+                            Third Place in <a href="https://www.synapse.org/Synapse:syn55249552/wiki/629023" target="_blank">Low field pediatric brain magnetic resonance Image Segmentation</a>, MICCAI 2024 Workshop
+                        </div>
+                        <div style="color: #888; font-size: 16px;">2024</div>
+                    </div>
+                    <div class="award-item">
+                        <div class="award-icon">🏅</div>
+                        <div style="flex:1; font-size: 18px;">
+                            Fifth place in <a href="https://codalab.lisn.upsaclay.fr/competitions/9804" target="_blank">Cerebral Artery Segmentation Challenge (CAS2023)</a>, MICCAI 2023
+                        </div>
+                        <div style="color: #888; font-size: 16px;">2023</div>
+                    </div>
+                    <div class="award-item">
+                        <div class="award-icon">🥇</div>
+                        <div style="flex:1; font-size: 18px;">
+                            First Prize in the Chinese Mathematics Competitions
+                        </div>
+                        <div style="color: #888; font-size: 16px;">2023</div>
+                    </div>
 
-                    <table class="pub-table">
-                        <tbody>
-                            <tr>
-                                <td style="padding:20px;width:25%;vertical-align:middle;text-align:center;">
-                                    <img src="images/icons/MGI-TECH.png" style="width:80px; border-radius: 8px;">
-                                </td>
-                                <td style="padding:20px;width:75%;vertical-align:middle">
-                                    <strong>MGI, X R&D Department</strong>
-                                    <br>
-                                    Research Intern
-                                    <br>
-                                    May. 2025 - Sep. 2025
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <!-- Experience Section -->
+                    <div class="section-heading">Experience</div>
+                    <div class="experience-item">
+                        <img src="images/icons/MGI-TECH.png" class="experience-logo">
+                        <div style="flex:1; font-size: 18px;">
+                            <strong>MGI, X R&D Department</strong>
+                            <br>
+                            Research Intern
+                        </div>
+                        <div style="color: #888; font-size: 16px; text-align: right;">
+                            May. 2025 - Sep. 2025
+                        </div>
+                    </div>
 
                     <!-- Footer -->
-                    <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-                        <tbody>
-                            <tr>
-                                <td style="padding:0px">
-                                    <br>
-                                    <p style="text-align:right;font-size:small;">
-                                        The website template was borrowed from <a href="https://jonbarron.info/">Jon Barron</a>.
-                                    </p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div style="margin-top: 60px; padding: 20px 0; border-top: 1px solid #eee; text-align: right; font-size: 14px; color: #888;">
+                        The website template was borrowed from <a href="https://jonbarron.info/" style="color: #888;">Jon Barron</a>.
+                    </div>
                 </td>
             </tr>
         </tbody>
