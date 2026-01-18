@@ -7,22 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheet.css?v=1766582259">
     <style>
-        /* 核心布局：统一容器 */
+
         .main-container {
             width: 100%;
-            max-width: 900px; /* 适度增加宽度以更好利用电脑屏幕空间 */
+            max-width: 1200px; 
             margin: 0 auto;
             padding: 20px;
             border-collapse: separate;
             border-spacing: 0px;
         }
 
-        /* 统一对齐 */
+
         td {
             padding: 0;
         }
 
-        /* 名字样式 */
         .name {
             font-size: 48px;
             font-weight: 700;
@@ -36,7 +35,6 @@
             margin-left: 10px;
         }
 
-        /* 正文样式 */
         .bio-text {
             font-size: 20px;
             line-height: 1.5;
@@ -44,7 +42,6 @@
             margin-bottom: 15px;
         }
 
-        /* 链接样式 */
         .profile-links {
             text-align: center;
             margin: 20px 0;
@@ -64,7 +61,6 @@
             margin-right: 5px;
         }
 
-        /* 板块标题样式 */
         .section-heading {
             font-size: 24px;
             font-weight: 700;
@@ -72,8 +68,6 @@
             border-bottom: 1px solid #ddd;
             margin-bottom: 20px;
         }
-
-        /* Publications 响应式布局 */
         .pub-row {
             display: flex;
             margin-bottom: 40px;
@@ -81,7 +75,7 @@
             gap: 30px;
         }
         .pub-image-wrapper {
-            flex: 0 0 40%; /* 电脑端保持 40% 的大图展示 */
+            flex: 0 0 50%; /* 电脑端保持 40% 的大图展示 */
         }
         .pub-image-wrapper img {
             width: 100%;
@@ -102,7 +96,6 @@
             margin-bottom: 5px;
         }
 
-        /* 论文链接按钮 */
         .pub-links {
             margin-top: 12px;
         }
@@ -118,7 +111,6 @@
             background: #f9f9f9;
         }
 
-        /* 经历部分响应式 */
         .experience-row {
             display: flex;
             align-items: center;
@@ -131,7 +123,7 @@
             border-radius: 10px;
         }
 
-        /* === 响应式媒体查询：针对手机端优化 === */
+
         @media screen and (max-width: 768px) {
             .main-container {
                 padding: 15px;
@@ -140,7 +132,7 @@
             /* 个人简介区域改为上下堆叠 */
             .profile-row {
                 display: flex;
-                flex-direction: column-reverse; /* 手机端文字在上，头像在下 */
+                flex-direction: column-reverse; 
                 align-items: center;
             }
             .profile-text-cell {
@@ -152,28 +144,25 @@
                 margin-bottom: 20px;
             }
 
-            /* Publications 改为上下堆叠，解决“异常大”和“排布有误” */
             .pub-row {
                 flex-direction: column;
                 gap: 15px;
                 align-items: flex-start;
             }
             .pub-image-wrapper {
-                width: 100%; /* 手机端图片占满宽度 */
+                width: 100%; 
             }
             .pub-content-wrapper {
                 width: 100%;
             }
 
-            /* 名字字号调小以适配手机屏 */
             .name {
                 font-size: 32px;
             }
             .name-cn {
                 font-size: 24px;
             }
-
-            /* 经历部分堆叠 */
+            
             .experience-row {
                 flex-direction: column;
                 align-items: flex-start;
