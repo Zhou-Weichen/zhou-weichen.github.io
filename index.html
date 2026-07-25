@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Weichen Zhou">
+<meta name="description" content="Weichen Zhou (周蔚琛) — first-year MSc in Mathematical Informatics at the University of Toyama (KiZulab). Research in computer vision, 3D content, pretrained models, and medical image analysis.">
+<meta property="og:title" content="Weichen Zhou">
+<meta property="og:description" content="MSc in Mathematical Informatics, University of Toyama — computer vision & pretrained models.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%B0%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<title>Weichen Zhou</title>
+<style>
+  :root{
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+    --cn:"STKaiti","KaiTi","STSong",serif;
+    /* dark theme (default) */
+    --bg:#090B0F; --bg-2:#0C0F15;
+    --ink:#EAEEF4; --muted:#98A3B2; --faint:#5B6472;
+    --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
+    --panel:rgba(255,255,255,.028);
+    --accent:#5CE1E6; --accent-2:#63B3FF; --accent-3:#A78BFA; --accent-ink:#04110f;
+    --glow:0 0 0 1px rgba(92,225,230,.35), 0 18px 60px -22px rgba(92,225,230,.45);
+    --dot:rgba(255,255,255,.05);
+    --fig-bg:#0b0e13; --fig-tint:rgba(92,225,230,.06);
+    --card-shadow:0 30px 70px -34px rgba(0,0,0,.8);
+    --img-shadow:0 20px 50px -20px rgba(0,0,0,.7);
+    --grad-hi:#ffffff;
+    --blob1:#12707a; --blob2:#2b3d8f; --blob3:#5b3a8c; --blob-op:.5;
+    --spot:rgba(92,225,230,.12); --spot-blend:screen;
+    --logo-bg:#ffffff; --nav-bg:rgba(9,11,15,.72);
+  }
+  :root[data-theme="light"]{
+    --bg:#F4F7FB; --bg-2:#FFFFFF;
+    --ink:#141821; --muted:#4B5563; --faint:#8A93A2;
+    --line:rgba(12,18,30,.10); --line-2:rgba(12,18,30,.18);
+    --panel:rgba(255,255,255,.72);
+    --accent:#0C97A3; --accent-2:#2563EB; --accent-3:#7C5CFF; --accent-ink:#ffffff;
+    --glow:0 0 0 1px rgba(12,151,163,.30), 0 18px 55px -24px rgba(12,151,163,.35);
+    --dot:rgba(12,18,30,.06);
+    --fig-bg:#EDF1F6; --fig-tint:rgba(12,151,163,.06);
+    --card-shadow:0 24px 50px -30px rgba(30,45,70,.35);
+    --img-shadow:0 16px 40px -22px rgba(30,45,70,.28);
+    --grad-hi:#0B1220;
+    --blob1:#7fe3e0; --blob2:#9ec2ff; --blob3:#cbb6ff; --blob-op:.4;
+    --spot:rgba(12,151,163,.10); --spot-blend:multiply;
+    --logo-bg:#ffffff; --nav-bg:rgba(244,247,251,.78);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans);
+    font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none}
+  img{display:block; max-width:100%}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+
+  /* ---------- Ambient background ---------- */
+  .bgfx{position:fixed; inset:0; z-index:-2; overflow:hidden; pointer-events:none}
+  .bgfx::before{ /* dotted grid */
+    content:""; position:absolute; inset:0;
+    background-image:radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 0);
+    background-size:34px 34px; mask-image:radial-gradient(ellipse 80% 70% at 50% 20%, #000 40%, transparent 100%);
+  }
+  .blob{position:absolute; border-radius:50%; filter:blur(90px); opacity:var(--blob-op); will-change:transform}
+  .b1{width:52vw; height:52vw; left:-10vw; top:-14vw; background:radial-gradient(circle,var(--blob1),transparent 65%); animation:drift1 26s ease-in-out infinite}
+  .b2{width:44vw; height:44vw; right:-8vw; top:8vh; background:radial-gradient(circle,var(--blob2),transparent 65%); animation:drift2 32s ease-in-out infinite}
+  .b3{width:40vw; height:40vw; left:20vw; bottom:-16vw; background:radial-gradient(circle,var(--blob3),transparent 65%); animation:drift3 30s ease-in-out infinite}
+  @keyframes drift1{50%{transform:translate(8vw,6vh) scale(1.1)}}
+  @keyframes drift2{50%{transform:translate(-6vw,10vh) scale(1.08)}}
+  @keyframes drift3{50%{transform:translate(5vw,-8vh) scale(1.12)}}
+  .spot{position:fixed; inset:0; z-index:-1; pointer-events:none; mix-blend-mode:var(--spot-blend);
+    background:radial-gradient(320px circle at var(--mx,-999px) var(--my,-999px), var(--spot), transparent 70%);
+    transition:background .08s}
+
+  /* ---------- Theme toggle ---------- */
+  .themebtn{position:fixed; top:16px; right:18px; z-index:60; width:44px; height:44px;
+    display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--line-2);
+    border-radius:12px; background:var(--panel); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    color:var(--ink); cursor:pointer; transition:.2s}
+  .themebtn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-1px)}
+  .themebtn svg{width:20px; height:20px; fill:currentColor}
+
+  /* ---------- Shell ---------- */
+  .app{display:grid; grid-template-columns:452px 1fr; max-width:1840px; margin:0 auto; min-height:100vh}
+
+  .side{position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto;
+    padding:40px 40px; border-right:1px solid var(--line);
+    background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%);
+    display:flex; flex-direction:column; justify-content:center; gap:20px}
+  .side::-webkit-scrollbar{width:8px} .side::-webkit-scrollbar-thumb{background:var(--line-2); border-radius:8px}
+
+  .avatar{width:100%; aspect-ratio:1; position:relative}
+  .avatar img{width:100%; height:100%; object-fit:cover; border-radius:26px; border:1px solid var(--line-2)}
+  .avatar::after{content:""; position:absolute; inset:-2px; border-radius:28px; padding:2px;
+    background:linear-gradient(135deg,var(--accent),transparent 40%,var(--accent-3));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude; opacity:.9}
+  .status{position:absolute; bottom:14px; right:14px; display:flex; align-items:center; gap:7px;
+    font:700 12px/1 var(--mono); color:var(--accent-ink); background:var(--accent); padding:8px 12px; border-radius:999px; letter-spacing:.03em}
+  .status::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--accent-ink); animation:pulse 1.8s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+
+  .name{font-size:2.5rem; font-weight:800; line-height:1.02; letter-spacing:-.03em; margin:2px 0}
+  .name .en{background:linear-gradient(100deg,var(--grad-hi) 10%,var(--accent) 45%,var(--accent-2) 70%,var(--grad-hi) 95%);
+    background-size:220% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shine 7s linear infinite}
+  @keyframes shine{to{background-position:220% 0}}
+  .name .cn{display:block; font-family:var(--cn); font-weight:400; font-size:1.35rem; color:var(--muted); letter-spacing:.06em; margin-top:8px}
+  .role{font:600 13px/1.5 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
+
+  .bio{color:var(--muted); font-size:1.06rem; line-height:1.7}
+  .bio a{color:var(--ink); border-bottom:1px solid var(--line-2)} .bio a:hover{color:var(--accent); border-color:var(--accent)}
+
+  .links{display:flex; flex-direction:column; gap:9px; margin-top:2px}
+  .links a{display:flex; align-items:center; gap:11px; padding:11px 14px; border:1px solid var(--line);
+    border-radius:12px; color:var(--muted); font-size:.9rem; font-weight:500; background:var(--panel);
+    transition:.2s}
+  .links a:hover{color:var(--ink); border-color:var(--accent); background:rgba(92,225,230,.07); transform:translateX(3px)}
+  .links svg{width:17px; height:17px; fill:currentColor; flex:0 0 auto}
+  .links .go{margin-left:auto; color:var(--faint); font-family:var(--mono); font-size:.8rem}
+
+  .nav{display:flex; flex-direction:column; gap:2px; margin-top:auto; padding-top:14px; border-top:1px solid var(--line)}
+  .nav a{display:flex; align-items:center; gap:10px; padding:9px 6px; color:var(--faint); font:600 12px/1 var(--mono); letter-spacing:.12em; text-transform:uppercase; transition:.2s}
+  .nav a:hover{color:var(--ink)} .nav a .n{margin-left:auto; color:var(--accent); opacity:.7}
+  .nav a::before{content:""; width:16px; height:1px; background:var(--line-2); transition:.2s}
+  .nav a:hover::before{width:28px; background:var(--accent)}
+
+  /* ---------- Main ---------- */
+  .main{padding:0 clamp(28px,3.4vw,64px) 76px; min-width:0}
+  section[id]{scroll-margin-top:80px}
+  section + section{margin-top:74px}
+
+  .topnav{position:sticky; top:0; z-index:40; display:flex; flex-wrap:wrap; align-items:center; gap:30px;
+    margin:0 calc(-1*clamp(28px,3.4vw,64px)) 40px; padding:22px clamp(28px,3.4vw,64px) 18px;
+    background:var(--nav-bg); -webkit-backdrop-filter:saturate(160%) blur(16px); backdrop-filter:saturate(160%) blur(16px);
+    border-bottom:1px solid var(--line)}
+  .topnav a{position:relative; display:inline-flex; align-items:baseline; gap:6px; padding:6px 1px;
+    color:var(--muted); font:600 .98rem/1 var(--sans); letter-spacing:.005em; transition:color .2s}
+  .topnav a i{font:700 .66rem/1 var(--mono); color:var(--faint); font-style:normal;
+    font-variant-numeric:tabular-nums; transform:translateY(-.55em); transition:color .2s}
+  .topnav a::after{content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; border-radius:2px;
+    background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+  .topnav a:hover{color:var(--ink)} .topnav a:hover i{color:var(--accent)}
+  .topnav a:hover::after,.topnav a.active::after{transform:scaleX(1)}
+  .topnav a.active{color:var(--ink)} .topnav a.active i{color:var(--accent)}
+
+  .sechead{display:flex; align-items:center; gap:18px; margin:0 0 30px}
+  .sechead:not(:first-child){margin-top:76px}
+  .kick{font:700 12px/1 var(--mono); letter-spacing:.24em; text-transform:uppercase; color:var(--accent); white-space:nowrap}
+  .sechead h2{margin:0; font-size:1.5rem; font-weight:750; letter-spacing:-.01em; white-space:nowrap}
+  .sechead .ln{flex:1; height:1px; background:linear-gradient(90deg,var(--line-2),transparent)}
+  .sechead .ct{font:600 12px/1 var(--mono); color:var(--faint); font-variant-numeric:tabular-nums}
+  .note{margin:-16px 0 26px; font:italic .84rem var(--sans); color:var(--faint)}
+
+  /* ---------- Hero: live visitor console ---------- */
+  .hero{min-height:calc(100vh - 116px); display:flex; flex-direction:column; justify-content:center; gap:22px; padding:6px 0 48px}
+  .hero-panel{display:flex; flex-direction:column;
+    border:1px solid var(--line); border-radius:22px; overflow:hidden; background:var(--panel);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px)}
+  .hero-info{padding:26px 32px; display:flex; align-items:flex-end; justify-content:space-between; gap:22px 44px; flex-wrap:wrap; border-bottom:1px solid var(--line)}
+  .hi-left{display:flex; flex-direction:column; gap:11px; min-width:280px}
+  .hi-eyebrow{display:inline-flex; align-items:center; gap:9px; font:700 .72rem/1 var(--mono); letter-spacing:.2em; text-transform:uppercase; color:var(--accent)}
+  .hi-eyebrow::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent); animation:pulse 1.6s infinite}
+  .hi-greet{margin:0; font-size:1.95rem; font-weight:800; letter-spacing:-.02em; line-height:1.08}
+  .hi-sub{margin:0; color:var(--muted); font-size:1.05rem; line-height:1.55; max-width:62ch}
+  .hi-sub b{color:var(--ink); font-weight:750}
+  .hi-stats{display:flex; gap:32px; flex-wrap:wrap}
+  .hi-stats>div{display:flex; flex-direction:column; gap:4px}
+  .hi-stats b{font:800 1.55rem/1 var(--sans); color:var(--ink); letter-spacing:-.01em; font-variant-numeric:tabular-nums}
+  .hi-stats span{font:600 .68rem/1 var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--faint)}
+  .hero-map{position:relative; height:clamp(384px,54vh,600px); background:radial-gradient(120% 120% at 72% 6%, var(--fig-tint), transparent 62%)}
+  .hero-map canvas{width:100%; height:100%; display:block; cursor:crosshair}
+  .map-tooltip{position:absolute; left:0; top:0; pointer-events:none; opacity:0; transform:translate(-50%,-125%);
+    transition:opacity .14s; padding:8px 12px; border-radius:10px; border:1px solid var(--line-2);
+    background:var(--nav-bg); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+    font:600 .82rem/1.25 var(--sans); color:var(--ink); white-space:nowrap; z-index:6}
+  .map-tooltip b{color:var(--accent); font-variant-numeric:tabular-nums}
+  .scrollcue{align-self:center; display:inline-flex; align-items:center; gap:9px; color:var(--muted);
+    font:600 .85rem/1 var(--sans); padding:11px 20px; border:1px solid var(--line); border-radius:999px;
+    background:var(--panel); transition:.2s}
+  .scrollcue:hover{color:var(--accent); border-color:var(--accent)}
+  .scrollcue .arr{animation:bob 1.8s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(4px)}}
+
+  .papers{display:flex; flex-direction:column; gap:26px}
+  .paper{position:relative; display:grid; grid-template-columns:1.15fr .85fr; gap:0; min-height:264px;
+    border:1px solid var(--line); border-radius:22px; overflow:hidden; background:var(--panel);
+    transition:transform .28s cubic-bezier(.2,.7,.2,1), box-shadow .28s, border-color .28s}
+  .paper::before{content:""; position:absolute; inset:0; border-radius:22px; opacity:0; transition:opacity .28s; pointer-events:none;
+    background:radial-gradient(420px circle at var(--cx,50%) var(--cy,50%), rgba(92,225,230,.10), transparent 60%)}
+  .paper:hover{transform:translateY(-6px); border-color:var(--line-2); box-shadow:var(--card-shadow)}
+  .paper:hover::before{opacity:1}
+  .paper:nth-child(even) .fig{order:2}
+  .paper.oral{border-color:rgba(92,225,230,.4)}
+  .paper.oral:hover{box-shadow:var(--glow)}
+
+  .fig{position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden;
+    background:transparent; border-right:1px solid var(--line)}
+  .paper:nth-child(even) .fig{border-right:0; border-left:1px solid var(--line)}
+  .fig img{width:100%; height:auto; display:block; transition:filter .35s}
+  .paper:hover .fig img{filter:brightness(1.06) saturate(1.05)}
+
+  .meta{padding:32px 34px; display:flex; flex-direction:column; justify-content:center}
+  .badge{align-self:flex-start; display:inline-flex; align-items:center; gap:7px; margin-bottom:14px;
+    font:700 11px/1 var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--accent);
+    padding:6px 11px; border:1px solid rgba(92,225,230,.4); border-radius:999px; background:rgba(92,225,230,.08)}
+  .badge::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent); animation:pulse 1.6s infinite}
+  .ptitle{font-size:1.4rem; font-weight:750; line-height:1.28; letter-spacing:-.012em; text-wrap:balance}
+  a.ptitle:hover{color:var(--accent)}
+  .authors{color:var(--muted); font-size:1.02rem; margin:14px 0 13px; line-height:1.55}
+  .authors strong{color:var(--ink); font-weight:700}
+  .venue{font:600 .9rem/1.45 var(--mono); color:var(--faint); letter-spacing:.01em}
+  .paper.oral .venue{color:var(--accent)}
+  .plinks{display:flex; flex-wrap:wrap; gap:9px; margin-top:20px}
+  .plinks a{display:inline-flex; align-items:center; gap:7px; font:600 .82rem var(--sans); color:var(--muted);
+    padding:8px 15px; border:1px solid var(--line-2); border-radius:10px; background:rgba(255,255,255,.02); transition:.2s}
+  .plinks a:hover{color:var(--accent-ink); background:var(--accent); border-color:var(--accent); transform:translateY(-2px)}
+  .plinks a svg{width:13px; height:13px; fill:currentColor}
+
+  /* ---------- Honors / Experience ---------- */
+  .cards{display:flex; flex-direction:column; gap:12px}
+  .item{display:flex; align-items:center; gap:20px; padding:20px 22px; border:1px solid var(--line);
+    border-radius:16px; background:var(--panel); transition:.22s}
+  .item:hover{border-color:var(--line-2); background:rgba(255,255,255,.045); transform:translateX(4px)}
+  .item .mk{font-size:1.7rem; width:40px; text-align:center; flex:0 0 auto; filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+  .item .tx{flex:1; font-size:1rem; color:var(--ink)}
+  .item .tx a{color:var(--accent); border-bottom:1px solid rgba(92,225,230,.35)} .item .tx a:hover{border-color:var(--accent)}
+  .item .yr{font:600 .85rem var(--mono); color:var(--faint); font-variant-numeric:tabular-nums; white-space:nowrap}
+  .logo{width:66px; height:66px; flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+    padding:13px; border:1px solid var(--line-2); border-radius:16px; background:var(--logo-bg); transition:.2s}
+  .logo:hover{border-color:var(--accent); transform:translateY(-1px)}
+  .logo a{display:flex; align-items:center; justify-content:center; width:100%; height:100%}
+  .logo img{width:100%; object-fit:contain}
+  .item .co strong{font-size:1.06rem} .item .co .sub{color:var(--muted); font-size:.92rem}
+  .item .co strong a.co-link{color:inherit; transition:color .2s} .item .co strong a.co-link:hover{color:var(--accent)}
+
+  footer{margin-top:64px; padding-top:24px; border-top:1px solid var(--line); font-size:.82rem; color:var(--faint); text-align:right}
+  footer a{color:var(--muted); border-bottom:1px solid var(--line-2)} footer a:hover{color:var(--accent)}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1080px){
+    .app{grid-template-columns:1fr}
+    .side{position:static; height:auto; border-right:0; border-bottom:1px solid var(--line);
+      flex-direction:row; flex-wrap:wrap; align-items:center; justify-content:flex-start; gap:18px 26px; padding:32px clamp(26px,5vw,48px)}
+    .side .bio{flex:1; min-width:280px} .avatar{width:140px; height:140px; aspect-ratio:auto}
+    .links{flex-direction:row; flex-wrap:wrap; width:100%} .links a{flex:1; min-width:150px} .links .go{display:none}
+    .nav{flex-direction:row; flex-wrap:wrap; width:100%; margin-top:4px; gap:4px 18px}
+    .nav a::before{display:none}
+  }
+  @media (max-width:720px){
+    .paper{grid-template-columns:1fr}
+    .paper{min-height:0}
+    .paper .fig, .paper:nth-child(even) .fig{order:0; border-right:0; border-left:0; border-bottom:1px solid var(--line)}
+    .name{font-size:2.1rem}
+    .sechead h2{font-size:1.3rem}
+  }
+  @media (max-width:900px){
+    .hero-info{align-items:flex-start; flex-direction:column; gap:18px}
+    .hero-map{height:clamp(320px,50vh,470px)}
+    .hi-greet{font-size:1.7rem}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .blob,.name .en,.status::before,.badge::before,.hi-eyebrow::before,.scrollcue .arr{animation:none}
+    *{transition:none!important; scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+<div class="bgfx" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="spot" aria-hidden="true"></div>
+
+<button class="themebtn" id="themeBtn" type="button" aria-label="Switch light / dark theme" title="Light / Dark">
+  <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-15a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1Zm0 17a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1ZM3 11h1a1 1 0 1 1 0 2H3a1 1 0 1 1 0-2Zm17 0h1a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2ZM5.0 5.0a1 1 0 0 1 1.4 0l.7.7A1 1 0 1 1 5.7 7.1l-.7-.7a1 1 0 0 1 0-1.4Zm12.2 12.2a1 1 0 0 1 1.4 0l.7.7a1 1 0 0 1-1.4 1.4l-.7-.7a1 1 0 0 1 0-1.4Zm1.8-12.2a1 1 0 0 1 0 1.4l-.7.7a1 1 0 1 1-1.4-1.4l.7-.7a1 1 0 0 1 1.4 0ZM6.4 17.2a1 1 0 0 1 0 1.4l-.7.7a1 1 0 0 1-1.4-1.4l.7-.7a1 1 0 0 1 1.4 0Z"/></svg>
+  <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+</button>
+
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="side">
+    <div class="avatar">
+      <img src="images/Photo/me.jpg" alt="Weichen Zhou">
+    </div>
+    <div>
+      <h1 class="name"><span class="en">Weichen Zhou</span><span class="cn">周蔚琛</span></h1>
+    </div>
+    <p class="role">MSc · Mathematical Informatics</p>
+    <p class="bio">
+      Hi! I am a first-year Master student in Mathematical Informatics at <a href="https://www.u-toyama.ac.jp/en/">University of Toyama</a> in the <a href="https://www.labzhang.com/">KiZulab</a>, advised by <a href="https://sites.google.com/view/chao-zhang/profile">Prof. Chao Zhang</a>. I received my Bachelor's degree from <a href="https://www.sztu.edu.cn/">Shenzhen Technology University</a> in 2025.
+    </p>
+    <p class="bio">
+      My research interests lie in investigating the potential of pretrained models for various computer vision tasks, including image generation, 3D content, video understanding, and dataset distillation. I am also deeply interested in the intersection of AI for Healthcare (e.g., medical image analysis) and Robotics (e.g., robot learning).
+    </p>
+    <nav class="links">
+      <a href="mailto:zweic008@gmail.com"><svg viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/></svg>Email<span class="go">↗</span></a>
+      <a href="https://scholar.google.com/citations?user=cIKyXT8AAAAJ"><svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.5 3.5L12 8.5l7.5 4.5L24 9.5z"/></svg>Google Scholar<span class="go">↗</span></a>
+      <a href="https://github.com/Zhou-Weichen/"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub<span class="go">↗</span></a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <nav class="topnav" aria-label="Sections">
+      <a href="#publications">Publications <i>01</i></a>
+      <a href="#honors">Honors <i>02</i></a>
+      <a href="#experience">Experience <i>03</i></a>
+    </nav>
+
+    <section class="hero" aria-label="Live visitor console">
+      <div class="hero-panel">
+        <div class="hero-info">
+          <div class="hi-left">
+            <span class="hi-eyebrow">Live Visitor Map</span>
+            <h2 class="hi-greet" id="greet">Welcome 👋</h2>
+            <p class="hi-sub" id="welcomeLine">Thanks for stopping by!</p>
+          </div>
+          <div class="hi-stats">
+            <div><b id="statTotal">—</b><span>Total visits</span></div>
+            <div><b id="statCountries">—</b><span>Countries</span></div>
+            <div><b id="statClock">—</b><span>Your local time</span></div>
+          </div>
+        </div>
+        <div class="hero-map">
+          <canvas id="worldmap"></canvas>
+          <div class="map-tooltip" id="mapTip"></div>
+        </div>
+      </div>
+      <a class="scrollcue" href="#publications">Explore publications <span class="arr">↓</span></a>
+    </section>
+
+    <section id="publications">
+      <div class="sechead"><span class="kick">01</span><h2>Publications</h2><span class="ln"></span><span class="ct">04</span></div>
+      <p class="note">* denotes equal contributions.</p>
+      <div class="papers">
+
+        <article class="paper oral tilt">
+          <div class="fig"><img src="images/pub/Geosubspace.png" alt="Geometric Subspace Intervention"></div>
+          <div class="meta">
+            <span class="badge">ECCV 2026 · Oral</span>
+            <a class="ptitle" href="https://arxiv.org/abs/2607.01987">Understanding Geometric Representations in Self-Supervised Vision Transformers via Subspace Intervention</a>
+            <p class="authors"><strong>Weichen Zhou</strong>, Yawen Zou, Chunzhi Gu, Ran Dong, Haoran Xie, Chao Zhang</p>
+            <p class="venue">The 19th European Conference on Computer Vision (ECCV 2026 Oral)</p>
+            <div class="plinks">
+              <a href="https://arxiv.org/abs/2607.01987" target="_blank">Paper<svg viewBox="0 0 16 16"><path d="M4 3h9v9h-2V6.4L4.7 12.7 3.3 11.3 9.6 5H4V3Z"/></svg></a>
+              <a href="https://zhou-weichen.github.io/Geosubprobe-project/" target="_blank">Page</a>
+              <a href="https://github.com/Zhou-Weichen/Geosubprobe" target="_blank">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="paper tilt">
+          <div class="fig"><img src="images/pub/FTDSES.jpg" alt="FTDSES"></div>
+          <div class="meta">
+            <a class="ptitle" href="https://doi.org/10.1364/OE.586591">Few-shot domain-adaptive hyperspectral image denoising via dynamic quantile-guided learning</a>
+            <p class="authors">Chengxi Li, Renjian Li, <strong>Weichen Zhou</strong>, Guiye Li, Meng Zhang, and Lingling Chen</p>
+            <p class="venue">Optics Express, 2026</p>
+            <div class="plinks"><a href="https://doi.org/10.1364/OE.586591" target="_blank">Paper<svg viewBox="0 0 16 16"><path d="M4 3h9v9h-2V6.4L4.7 12.7 3.3 11.3 9.6 5H4V3Z"/></svg></a></div>
+          </div>
+        </article>
+
+        <article class="paper tilt">
+          <div class="fig"><img src="images/pub/TailoredMRI.png" alt="TailoredMRI"></div>
+          <div class="meta">
+            <a class="ptitle" href="https://www.sciencedirect.com/science/article/pii/S0895611125000692">Tailored self-supervised pretraining improves brain MRI diagnostic models</a>
+            <p class="authors">Xinhao Huang, Zihao Wang, <strong>Weichen Zhou</strong>, Kexin Yang, Kaihua Wen, Haiguang Liu, Shoujin Huang, Mengye Lyu</p>
+            <p class="venue">Computerized Medical Imaging and Graphics, 2025</p>
+            <div class="plinks"><a href="https://www.sciencedirect.com/science/article/pii/S0895611125000692" target="_blank">Paper<svg viewBox="0 0 16 16"><path d="M4 3h9v9h-2V6.4L4.7 12.7 3.3 11.3 9.6 5H4V3Z"/></svg></a></div>
+          </div>
+        </article>
+
+        <article class="paper tilt">
+          <div class="fig"><img src="images/pub/LISA.png" alt="LISA"></div>
+          <div class="meta">
+            <a class="ptitle" href="https://doi.org/10.1007/978-3-031-83008-2_3">Infant Hippocampal Segmentation in Ultra-Low-Field MRI Using External Datasets with Diverse Field Strengths</a>
+            <p class="authors"><strong>Weichen Zhou</strong>, Jingyu Li, Xi Wang, Yuwan Wang, and Mengye Lyu</p>
+            <p class="venue">Lecture Notes in Computer Science, Springer, Cham, 2025</p>
+            <div class="plinks"><a href="https://doi.org/10.1007/978-3-031-83008-2_3" target="_blank">Paper<svg viewBox="0 0 16 16"><path d="M4 3h9v9h-2V6.4L4.7 12.7 3.3 11.3 9.6 5H4V3Z"/></svg></a></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="honors">
+      <div class="sechead"><span class="kick">02</span><h2>Honors &amp; Awards</h2><span class="ln"></span><span class="ct">03</span></div>
+      <div class="cards">
+        <div class="item"><div class="mk">🥉</div><div class="tx">Third Place in <a href="https://www.synapse.org/Synapse:syn55249552/wiki/629023" target="_blank">Low field pediatric brain magnetic resonance Image Segmentation</a>, MICCAI 2024 Workshop</div><div class="yr">2024</div></div>
+        <div class="item"><div class="mk">🥈</div><div class="tx">2nd Prize in 9th National Biomedical Engineering Innovation Design Competition</div><div class="yr">2024</div></div>
+        <div class="item"><div class="mk">🏅</div><div class="tx">Fifth place in <a href="https://codalab.lisn.upsaclay.fr/competitions/9804" target="_blank">Cerebral Artery Segmentation Challenge (CAS2023)</a>, MICCAI 2023</div><div class="yr">2023</div></div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="sechead"><span class="kick">03</span><h2>Experience</h2><span class="ln"></span><span class="ct">01</span></div>
+      <div class="cards">
+        <div class="item"><div class="logo"><a href="https://www.mgi-tech.com/" target="_blank" rel="noopener"><img src="images/icons/MGI-TECH.png" alt="MGI-tech"></a></div><div class="co tx"><strong><a class="co-link" href="https://www.mgi-tech.com/" target="_blank" rel="noopener">MGI, X R&amp;D Department</a></strong><br><span class="sub">Research Intern</span></div><div class="yr">May. 2024 – Sep. 2024</div></div>
+      </div>
+    </section>
+
+    <footer>© 2026 Weichen Zhou</footer>
+  </main>
+</div>
+
+<script>
+  (function(){
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var root = document.documentElement;
+
+    /* theme toggle: default dark, remember choice */
+    var KEY = 'wz-theme', btn = document.getElementById('themeBtn');
+    try { var saved = localStorage.getItem(KEY); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+    function eff(){ return root.getAttribute('data-theme') || 'dark'; }
+    function paint(){
+      var dark = eff() === 'dark';
+      btn.querySelector('.i-sun').style.display  = dark ? '' : 'none';
+      btn.querySelector('.i-moon').style.display = dark ? 'none' : '';
+    }
+    if (btn){
+      paint();
+      btn.addEventListener('click', function(){
+        var next = eff() === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem(KEY, next); } catch (e) {}
+        paint();
+      });
+    }
+
+    /* scrollspy: highlight current section in the top nav */
+    var navlinks = {};
+    document.querySelectorAll('.topnav a').forEach(function(a){ navlinks[a.getAttribute('href').slice(1)] = a; });
+    var sections = ['publications','honors','experience'].map(function(id){ return document.getElementById(id); }).filter(Boolean);
+    if (sections.length && 'IntersectionObserver' in window){
+      var spy = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting){
+            Object.keys(navlinks).forEach(function(k){ navlinks[k].classList.remove('active'); });
+            if (navlinks[e.target.id]) navlinks[e.target.id].classList.add('active');
+          }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+      sections.forEach(function(s){ spy.observe(s); });
+    }
+
+    if(!reduce){
+      window.addEventListener('pointermove', function(e){
+        root.style.setProperty('--mx', e.clientX+'px');
+        root.style.setProperty('--my', e.clientY+'px');
+      }, {passive:true});
+      document.querySelectorAll('.paper').forEach(function(card){
+        card.addEventListener('pointermove', function(e){
+          var r = card.getBoundingClientRect();
+          card.style.setProperty('--cx', (e.clientX-r.left)+'px');
+          card.style.setProperty('--cy', (e.clientY-r.top)+'px');
+        }, {passive:true});
+      });
+    }
+  })();
+</script>
+
+<script>
+/* ===== Live visitor map — precise dotted map from a baked land mask.
+   Preview uses MOCK rows (country code + count). On deploy, replace MOCK with
+   a fetch() to your Cloudflare Worker (returns {you, total, visits:[{country,count}]}). ===== */
+(function(){
+  var canvas = document.getElementById('worldmap');
+  if(!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+  var tip = document.getElementById('mapTip');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var WORKER_URL = "https://visitors.zweic008.workers.dev/";     
+
+  var MAP = {"mask": {"w": 512, "h": 256, "b64": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///gAAAA/////gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/////wAAB//////gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH////////////////g/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA///////////////////+AAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA///////////////////4AAAAAAA//wAAAD/wAAAAAAAAH/4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/////8f///////////gAAAAAB///+AAAAAAAAAAAAAAAf/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQH+ef////gf///////////gAAAAAAf/+AAAAAAAAAAAAAAAAD//4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfA/3x////n////////////wAAAAAAD//4AAAAAAAAAAAAAAAAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+PwAMfgP/+A////////////+AAAAAAAP+fgAAAAAAAAAAAAAAAABD4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/gDAAD/P//wD////////////wAAAAAAA+AAAAAAAAAAAPAAAAAAAH/vAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//57D+f7//wAP///////////wAAAAAAAAAAAAAAAAAAf/wAAAAA+////AAAAAH4AAAAAAAAAAAAAAAAAAAAAAAH//w/3///wAAAA/////////+AAAAAAAAAAAAAAAAAD//AAAAAP/////4AAAAB/+4AAAAAAAAAAAAAAAAAAAAAD//4D77//+AAAAD/////////AAAAAAAAAAAAAAAAAB/gAAAAAf/////4AAAAAf/P4AAAAAAAAAAAAAAAAAAAP/w4AAAP/8AAAAAAH////////4AAAAAAAAAAAAAAAAB/AAAAAAP/////4AAAAAAAAAAAAAAAAAAAAAAAAAAAAD//gB8f3+ff/gAAAA////////4AAAAAAAAAAAAAAAAA/AAAAAP////////8H8AAH4AAAAAAAAAAAAAAAAAAAAA////+P/+P//8AAAAH///////4AAAAAAAAAAAAAAAAA/gAA/MD///////////wAD/AAAAAAAAAAAAAAAAAAAAAf////h/uH///4AAAB///////+AAAAAAAAAAAAAAAAAfgAAf3////////////8AA//8AAAAAADwAAAA8AAAAAAD+///8D/w////4AAA////////gAAAAAAAAAAAAAAAAH+AAf//////////////n////4AAAAADwAAAf//4AAAAIAH///4D/P////4AAD//////98AAAAAAAAAAf/gAAAAPwAP/f///////////////////8AAAAwAAAP////8AD/9wf///n/wP////AAA///////8AAAAAAAAAH//2AAAAAAMB//////////////////////HAP/AAAAP/////+////7///z9/w/g//4AAHf/////8AAAAAAAAAP////AAAAAH+f///////////////////////z//4AAf/////////////+Aff+f4P/+AAA//////wAAAAAAAAAP/////A8B/////v/////////////////////////wAB//////////////////v+D3/+AAf////+AAAAAAAAAAP/////8Pv/////7//////////////////////////8AP///////////////////g4//8AH////4AAAAAAAAAAH//////jz/////9///////////////////////////wPf//////////////////gA///AB////8AA43wAAAAAD///////f/////////////////////////////////+f//////////////////+AAP/PwAP///4AAf/8AAAAAB/////wP////////////////////////////////+H4D///////////////////+D//8wAB//+AAAD//gAAAAB//4//85/////////////////////////////////AeAfv/////////////////fw///wAAf//gAAAP/wAAAAA//+/////////////////////////////////////AAfAH////////////////8P/AB/8AAD//wAAAH/AAAAAA///f////////////////////////////////////4AAwf////////////////+AnAAP/AAAf/4AAAAAAAAAAD//+P/////////////////////////////////////AAAP////////////////+ADn/4fAAAB/8AAAAAAAAAAB///D/////////////////////////////////////wAAH/////////////////AAAn/gAAAAf/AAAAAAAAAAAf//g/////////////////////////////////9//4AAAA/////////////////AAAB//AAAAB/gAAAAAAAAAAH//8P///////////////////////////////wd//wAAAA////8////////////wAAAf/gYAAAB4AAAAAAAAAAB///h/P/////////////////////////////4B/7gAAAAAH/84AH//////////8AAAH/8PAAAAAAAAAAAAAAAAf//wH//////////////////////////////+B+AAAAAAAB//AAAP//////////wAAD///4AAAAAAAAAAAAA8AD9/8B////////////////////////////AAeA/AAAAAAAAAf8AAAf/////////+AAAf///AAAAAAAAAAAAAPgAcP8wP///////////////////////////gAAB/gAAAAAAAAPvAAAAf/////////8AAD///4AAAAAAAAAAAAH8AA7/4////////////////////////////gAAA/+AAAAAAAAPjAAAAB//////////4AAf//+AAAAAAAAAAAAB+AAff0f///////////////////////////gAAAf/AAAAAAAAfgAAAAAP//////////wAP///4AAAAAAAAAAAAfwAH/4H///////////////////////////wAAAH/wAAAAAAA/AAAAAAD///////////4P////wAAAAAAAAAAAb8AB3wD///////////////////////////wAAAB/4AAAAAAAcAAAAAAAP//////////+P////+AAAAAAAAAAAffwAPY////////////////////////////+YgAAf8AAAAAAAAAAAAAAA5///////////x/////4AAAAAAAAAAPx+A////////////////////////////////sAAH8AAAAAAAAAAAAAAAGP//////////8f////+AAAAAAAAAAD9/4/////////////////////////////////AAB/AAAAAAAAAAAAAAAAx///////////H/////gAAAAAAAAAA+f+f////////////////////////////////wAAPAAAAAAAAAAAAAAAAAf//////////9/////4AAAAAAAAAAOP/P////////////////////////////////8AADgAAAAAAAAAAAAAAAAD////////////////+AAAAAAAAAAAB//////////////////////////////////zgAAwAAAAAAAAAAAAAAAAB////////////////3gAAAAAAAAAAA8H////////////////////////////////84AAAAAAAAAAAAAAAAAAAAH/////////////+PB/AAAAAAAAAAAAf/////////////////////////////////PAAAAAAAAAAAAAAAAAAAAAf/////////////+Q/4AAAAAAAAAAB//////////////////////////////////3wAAAAAAAAAAAAAAAAAAAAD//////////////Af+AAAAAAAAAAAf/////////////////////////////////5wAAAAAAAAAAAAAAAAAAAAAf/////////////wH/wAAAAAAAAAAB/////////////////////////////////8cAAAAAAAAAAAAAAAAAAAAAH//////////////0DYAAAAAAAAAAAH////////////////////////////////+HgAAAAAAAAAAAAAAAAAAAAB///////////////gAAAAAAAAAAAAA///////98f//B////////////////////goAAAAAAAAAAAAAAAAAAAAAf//////////////wAAAAAAAAAAAAAP//9///+P///D////////////////////wYAAAAAAAAAAAAAAAAAAAAAH/////////////vgAAAAAAAAAAAAAD///X///Bx//h////////////////////4HAAAAAAAAAAAAAAAAAAAAAB/////////////ngAAAAAAAAAAAAAB//35///gAH/8f///////////////////4B+AAAAAAAAAAAAAAAAAAAAAf////////////AAAAAAAAAAAAAAP///w/H//wAAf/D///////////////////8B/gAAAAAAAAAAAAAAAAAAAAP////////////wAAAAAAAAAAAAAB//+A34f/8AAD/4P//////////////////kA/gAAAAAAAAAAAAAAAAAAAAB////////////+AAAAAAAAAAAAAAf//gM/h//B/Af/D//////////////////gAGQAAAAAAAAAAAAAAAAAAAAAf///////////8AAAAAAAAAAAAAAH//gHD+f//////4X/////////////////4ABwAAAAAAAAAAAAAAAAAAAAAH///////////8AAAAAAAAAAAAAAB//gBwP/+f/////H/////////////////8AA8AAAAAAAAAAAAAAAAAAAAAB///////////+AAAAAAAAAAAAAAA//wAcA6/H/////h///////////////+/8AAHAAAAAAAAAAAAAAAAAAAAAAP///////////AAAAAAAAAAAAAAAP/8AHAOHh/////4f///////////////MPgADwAAAAAAAAAAAAAAAAAAAAAD///////////wAAAAAAAAAAAAAAD//AAA/B+f////8D///////////////AH4AA4AAAAAAAAAAAAAAAAAAAAAAf//////////4AAAAAAAAAAAAAAAf/wAAfAPj/////w////////////////4/AA+AAAAAAAAAAAAAAAAAAAAAAD//////////8AAAAAAAAAAAAAAAH/w//xwDgf/////////////////////+H4B/gAAAAAAAAAAAAAAAAAAAAAA///////////gAAAAAAAAAAAAAAAHA//8IAIB3n///////////////////8B+AfwAAAAAAAAAAAAAAAAAAAAAAH//////////4AAAAAAAAAAAAAAAB////AAB8A5///////////////////+Afj/8AAAAAAAAAAAAAAAAAAAAAAA//////////8AAAAAAAAAAAAAAAA////wAAGAOf///////////////////gHx//AAAAAAAAAAAAAAAAAAAAAAAH/////////8AAAAAAAAAAAAAAAAf///8AAAAAP///////////////////8AB/4AAAAAAAAAAAAAAAAAAAAAAAAf////////8AAAAAAAAAAAAAAAAf////gAAAAD////////////////////AA/8AAAAAAAAAAAAAAAAAAAAAAAAB////////+AAAAAAAAAAAAAAAAP/////gHgAB////////////////////4APwAAAAAAAAAAAAAAAAAAAAAAAAAf////////AAAEAAAAAAAAAAAAD/////8D/AAf////////////////////ABwAAAAAAAAAAAAAAAAAAAAAAAAAD////////gAAAAAAAAAAAAAAAA//////4////////////////////////wAYAAAAAAAAAAAAAAAAAAAAAAAAAA5///////4AAAAAAAAAAAAAAAAP//////////////////////////////4AAAAAAAAAAAAAAAAAAAAAAAAAAAAHf////+D+AAAAAAAAAAAAAAAAD///////////////////////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAA7////DgHgAAAAAAAAAAAAAAAD/////////////+P////////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAH////AAA8AAAAAAAAAAAAAAAB//////////////j////////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAD3///AAAPAAAAAAAAAAAAAAAB//////////////8f///////////////+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAe///wAAD/AAAAAAAAAAAAAAA///////////z///h////////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAADz//8AAAf4AAAAAAAAAAAAAAf//////////+f//8H///////////////gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM///AAADgAAAAAAAAAAAAAAP///////////z///wf//////////////4AAAAAAAAAAAAAAAAAAAAAAAAAAAAADj//wAAAzAAAAAAAAAAAAAAD///////////8///8eD8////////////8wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAc//8AAAAwAAAAAAAAAAAAAB////////////n////gAH///////////+cAAAAAAAAAAAAAAAAAAAAAAAAAAAAADj/+AAAAEAAAAAAAAAAAAAAf///////////4/////AA////////////OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY//gAAP4AAAAAAAAAAAAAAP////////////H////4AD///////////DgAAAAAAAAAAAAAAAAADAAAAAAAAAAAAH/8AAHfwAAAAAAAAAAAAAD////////////5/////AA/////v////+AQAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAA//AD4A/AAAAAAAAAAAAAB////////////+f////gAH////j////8AAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAf/wB+AD8AAAAAAAAAAAAAf////////////j////wAA3///Af//+MAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAH/+AfAAf/AAAAAAAAAAAAD////////////4////4AAB///wH///HAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAA//wPwAAH8AAAAAAAAAAAA/////////////D///+AAAf//wAf//jwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//f8ABj/uAAAAAAAAAAAP////////////w////AAAH//wAH//44ABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf//+AA8/jgAAAAAAAAAAB////////////+H///gAAB//4AA///AAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA///gAAAAAAAAAAAAAAAA/////////////w///gAAAP/8AAP//4AAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//4AAAAAAAAAAAAAAAAP////////////8P//AAAAD/+AAD///AADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPv/+AAAAAAAAAAAAAAAD/////////////j//gAAAA//AAA7//4AA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//wAAAAAAAAAAAAAAB/////////////8//wAAAAH/AAAAf/+AAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/8AAAAAAAAAAAAAAAf/////////////n/gAAAAB/4AAAH//wAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//AAAAAAAAAAAAAAAD/////////////9/gAAAAAP+AAAB//8AAfgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/wAAAAAAAAAAAAAAA//////////////+AAAAAAD/gAAAP//AAGYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAaAAAAAAAAAAAAP/////////////+AIAAAAA/wAAAH//wAAjgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAO4AAAAAAAAAAAB//////////////AeAAAAAH8AAAAw/8AAH4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwA/+D8AAAAAAAAAAP/////////////5/gAAAAB/AAAAMP+AAZ+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AP///AAAAAAAAAAB///////////////4AAAAAPwAAADA+AAMPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPjn///wAAAAAAAAAAP//////////////+AAAAAD+AAABwHAAGDMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf////+AAAAAAAAAAB///////////////AAAAAA9wAAAeBgABAXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHz////wAAAAAAAAAAf//////////////wAAAAACcAAAHgAAAAfwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM////+AAAAAAAAAAD//////////////4AAAAAAHgAAAcAAAAH8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH////wAAAAAAAAAAf/////////////+AAAAAAB4AAAHgAAHAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////8AAAAAAAAAD//////////////AAAAAAAMAAAA8AAB4DgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/////wAAAAAAAAAP/8B//////////wAAAAAAAAAAePgAB/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////+AAAAAAAAAB4MAf/////////4AAAAAAAAAADx8AA/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////wAAAAAAAAAAAAAP////////8AAAAAAAAAAAeeAAfwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/////8AAAAAAAAAAAAAB////////+AAAAAAAAAAAD7wAf8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//////AAAAAAAAAAAAAAf////////AAAAAAAAAAAA+8AP/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//////4AAAAAAAAAAAAAH////////gAAAAAAAAAAAH/gf/wBGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//////+AAAAAAAAAAAAAB////////wAAAAAAAAAAAA/wH/+fxwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA///////gAAAAAAAAAAAAAf///////wAAAAAAAAAAAAH8D//P4YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf//////+AAAAAAAAAAAAAP///////4AAAAAAAAAAAAB/Af/yAGHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP////////AAAAAAAAAAAAD///////8AAAAAAAAAAAAAP4H/5/An4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB////////4AAAAAAAAAAAAf///////AAAAAAAAAAAAAB+A/8fAA+PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf////////wAAAAAAAAAAAH///////AAAAAAAAAAAAAAf4P/HwAD3+AAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////////4AAAAAAAAAAA///////wAAAAAAAAAAAAAD+B/x8H9//8AGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//////////AAAAAAAAAAAH//////4AAAAAAAAAAAAAAfgAcfhhP//4BwAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////4AAAAAAAAAAA//////+AAAAAAAAAAAAAAD4AAD8AAf//AcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//////////wAAAAAAAAAAH//////AAAAAAAAAAAAAAAeAABzAAEf/x+YAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//////////+AAAAAAAAAAB//////wAAAAAAAAAAAAAAD8AAAAADD///CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf//////////gAAAAAAAAAAf/////+AAAAAAAAAAAAAAAP/AAAAAw//4A8AAAAAAAAAAAAAAAAAAAAAAAAAAAAD//////////4AAAAAAAAAAD//////AAAAAAAAAAAAAAAB/4AAAAAP/8ABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/////////+AAAAAAAAAAA//////wAAAAAAAAAAAAAAAB/5khgAH/ngAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAH//////////gAAAAAAAAAAP/////8AAAAAAAAAAAAAAAAAM/54AAHw+AAMAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////wAAAAAAAAAAD//////gAAAAAAAAAAAAAAAAABw4AAAMHwAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/////////4AAAAAAAAAAA//////8AAAAAAAAAAAAAAAAAAMYAAAAA+AA4AAAAAAAAAAAAAAAAAAAAAAAAAAAB/////////8AAAAAAAAAAAH//////AAAAAAAAAAAAAAAAAAAAAAAAgBgAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAf////////+AAAAAAAAAAAB//////wAAAAAAAAAAAAAAAAAAAABwAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////////gAAAAAAAAAAAf/////8AGAAAAAAAAAAAAAAAAAAA/4HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf////////wAAAAAAAAAAAP//////ABgAAAAAAAAAAAAAAAAAAf+B4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH////////4AAAAAAAAAAAH//////wA8AAAAAAAAAAAAAAAAACP/AeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB////////+AAAAAAAAAAAB//////8APAAAAAAAAAAAAAAAAAD7/gHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP////////gAAAAAAAAAAAf//////APwAAAAAAAAAAAAAAAAB//8B+AAAABAAAgAAAAAAAAAAAAAAAAAAAAAAAB////////4AAAAAAAAAAAP//////wP8AAAAAAAAAAAAAAAAA///gfgAAAAQAAIAAAAAAAAAAAAAAAAAAAAAAAAH///////+AAAAAAAAAAAD//////4H+AAAAAAAAAAAAAAAAA///+P8AAAACAAMAAAAAAAAAAAAAAAAAAAAAAAAAf///////gAAAAAAAAAAA//////8D/gAAAAAAAAAAAAAAAAf///7/AAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAD///////4AAAAAAAAAAAP/////4A/4AAAAAAAAAAAAAAAAH/////wAAAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAf//////8AAAAAAAAAAAB/////8AP8AAAAAAAAAAAAAAAAB/////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///////AAAAAAAAAAAAf////+AB/AAAAAAAAAAAAAAAAA//////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA///////wAAAAAAAAAAAD/////AAfwAAAAAAAAAAAAAAAD///////AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//////4AAAAAAAAAAAA/////wAP8AAAAAAAAAAAAAAAH///////wAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//////8AAAAAAAAAAAAH////+AH+AAAAAAAAAAAAAAAH///////+AAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAA///////AAAAAAAAAAAAA/////gB/gAAAAAAAAAAAAAAD////////wAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//////gAAAAAAAAAAAAP////4AfwAAAAAAAAAAAAAAB////////+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/////+AAAAAAAAAAAAAD////+AD8AAAAAAAAAAAAAAAf////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/////+AAAAAAAAAAAAAA/////gA/AAAAAAAAAAAAAAAH////////+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf////+AAAAAAAAAAAAAAP////gAPgAAAAAAAAAAAAAAB/////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/////AAAAAAAAAAAAAAB////gAAgAAAAAAAAAAAAAAAf////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/////gAAAAAAAAAAAAAAf///4AAAAAAAAAAAAAAAAAAH/////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf////8AAAAAAAAAAAAAAH///+AAAAAAAAAAAAAAAAAAB/////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH////+AAAAAAAAAAAAAAA////gAAAAAAAAAAAAAAAAAAP////////+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////gAAAAAAAAAAAAAAP///4AAAAAAAAAAAAAAAAAAD/////////gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////wAAAAAAAAAAAAAAB///8AAAAAAAAAAAAAAAAAAAf////////4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP////4AAAAAAAAAAAAAAAP//+AAAAAAAAAAAAAAAAAAAH////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD////+AAAAAAAAAAAAAAAD///AAAAAAAAAAAAAAAAAAAB/////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////AAAAAAAAAAAAAAAAf//gAAAAAAAAAAAAAAAAAAAP////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP////gAAAAAAAAAAAAAAAH//wAAAAAAAAAAAAAAAAAAAD//+H////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD////wAAAAAAAAAAAAAAAB//4AAAAAAAAAAAAAAAAAAAA//4AP///+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////4AAAAAAAAAAAAAAAAf/8AAAAAAAAAAAAAAAAAAAAf/4AB////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///8AAAAAAAAAAAAAAAAD/4AAAAAAAAAAAAAAAAAAAAH/8AAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH///+AAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAfAAADf//4AAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAD///4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//+AAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//AAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAH///4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/8AAAAAPwAAAAAAAAAAAAAAAAAAAAAAAAB///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/wAAAAAD8AAAAAAAAAAAAAAAAAAAAAAAAAf//8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAB/AAAAAAAAAAAAAAAAAAAAAAAAAH//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAD//8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATwAAAAAAAAAAAAAAAAAAAAAAAAA//+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB+AAAAAP4AAAAAAAAAAAAAAAAAAAAAAAAAP/8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwAAAAH0AAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4AAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAA//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAB+AAAAAAAAAAAAAAAAAAAAAAAAAAP/8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/AAAAAAAAAAAAAAAAAAAAAAAAAAD//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/AAAAAAAAAAAAAAAAAAAAAAAAAAB//gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAAAAAAAAAAAAAf/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAAAAAAAAP/8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAB//gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/4AfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf+AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAHgA4AAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/AAAAAAAAAAAAAAAAAAAAAAAAAAD/wAAAAAAMAAH+B/wH///gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB+AAAAAAAAAAAAAAAAAAAAAAAAAAH//gAAAAP//////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAA/////8AAP///////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH4AAAAAAAAAAAAAAAAAAAAAAHAH//////gAf/////////////////4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7/gAAAAAAAAAAAAAAAAAAAAAD/P//////8AP//////////////////+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/8AAAAAAAAAAAAAAAA8e/4Af////////+D////////////////////4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//gAAAAAAAAAAAAAAP///////////////h//////////////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAf//4AAAAAAAAAAAP//////////////////w///////////////////////8AAAAAAAAAAAAAAAAAAAA/4AAAAH/v+AAAAAAAAAAAP///////////////////////////////////////////AAAAAAAAAAAAAAAAAAAA/+AMAAAGP/wAAAAAAAAAAf///////////////////////////////////////////gAAAAAAAAAAAAAB5+AAAH////7+H//8AAAAAAAAAA////////////////////////////////////////////wAAAAAAAAAAAA/////8AA/////////+AAAAAAAAAAP///////////////////////////////////////////gAAAAAAAAAAA/////////7////////8AAAAAAAAAAH///////////////////////////////////////////AAAAAAAAAAAf//////////////////+AAAAAAAAAA////////////////////////////////////////////AAAAAAAAAAAP//////////////////gAAAAAAAAB/////////////////////////////////////////////gAAAAAAAA/w/////////////////+AAAAAAAAAAH/////////////////////////////////////////////4AAAAAAAAH///////////////////4AAAAADgAA///////////////////////////////////////////////AAAAAAAHw///////////////////8AAAAAH/AB////////////////////////////////////////////////AAAAAAA/D//////////////////wAAAAAD/4A////////////////////////////////////////////////wAAAAAADwAD/////////////////AAAHAH/+AHB/////////////////////////////////////////////wAAAAAAAAAAAP/////////////////4H/wH/+AAD/////////////////////////////////////////////4AAAAAAAAAH/////////////////////v4AcAB////////////////////////////////////////////////AAAAAAAAAAf/////////////////////8Af//////////////////////////////////////////////////8AAAAAAAAAA//////////////////////5////////////////////////////////////////////////////8AAAAAAAAAf///////////////////////////////////////////////////////////////////////////+AAGZ/gAAH/////////////////////////////////////////////////////////////////////////////PD/////////////////////////////////////////////////////////////////////////////////////AAAAf///4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="}, "cent": {"AD": [42.55, 1.6, "Andorra"], "AE": [23.42, 53.85, "United Arab Emirates"], "AF": [33.94, 67.71, "Afghanistan"], "AG": [17.06, -61.8, "Antigua and Barbuda"], "AI": [18.22, -63.07, "Anguilla"], "AL": [41.15, 20.17, "Albania"], "AM": [40.07, 45.04, "Armenia"], "AN": [12.23, -69.06, "Netherlands Antilles"], "AO": [-11.2, 17.87, "Angola"], "AQ": [-75.25, -0.07, "Antarctica"], "AR": [-38.42, -63.62, "Argentina"], "AS": [-14.27, -170.13, "American Samoa"], "AT": [47.52, 14.55, "Austria"], "AU": [-25.27, 133.78, "Australia"], "AW": [12.52, -69.97, "Aruba"], "AZ": [40.14, 47.58, "Azerbaijan"], "BA": [43.92, 17.68, "Bosnia and Herzegovina"], "BB": [13.19, -59.54, "Barbados"], "BD": [23.68, 90.36, "Bangladesh"], "BE": [50.5, 4.47, "Belgium"], "BF": [12.24, -1.56, "Burkina Faso"], "BG": [42.73, 25.49, "Bulgaria"], "BH": [25.93, 50.64, "Bahrain"], "BI": [-3.37, 29.92, "Burundi"], "BJ": [9.31, 2.32, "Benin"], "BM": [32.32, -64.76, "Bermuda"], "BN": [4.54, 114.73, "Brunei"], "BO": [-16.29, -63.59, "Bolivia"], "BR": [-14.24, -51.93, "Brazil"], "BS": [25.03, -77.4, "Bahamas"], "BT": [27.51, 90.43, "Bhutan"], "BV": [-54.42, 3.41, "Bouvet Island"], "BW": [-22.33, 24.68, "Botswana"], "BY": [53.71, 27.95, "Belarus"], "BZ": [17.19, -88.5, "Belize"], "CA": [56.13, -106.35, "Canada"], "CC": [-12.16, 96.87, "Cocos [Keeling] Islands"], "CD": [-4.04, 21.76, "Congo [DRC]"], "CF": [6.61, 20.94, "Central African Republic"], "CG": [-0.23, 15.83, "Congo [Republic]"], "CH": [46.82, 8.23, "Switzerland"], "CI": [7.54, -5.55, "Côte d'Ivoire"], "CK": [-21.24, -159.78, "Cook Islands"], "CL": [-35.68, -71.54, "Chile"], "CM": [7.37, 12.35, "Cameroon"], "CN": [35.86, 104.2, "China"], "CO": [4.57, -74.3, "Colombia"], "CR": [9.75, -83.75, "Costa Rica"], "CU": [21.52, -77.78, "Cuba"], "CV": [16.0, -24.01, "Cape Verde"], "CX": [-10.45, 105.69, "Christmas Island"], "CY": [35.13, 33.43, "Cyprus"], "CZ": [49.82, 15.47, "Czech Republic"], "DE": [51.17, 10.45, "Germany"], "DJ": [11.83, 42.59, "Djibouti"], "DK": [56.26, 9.5, "Denmark"], "DM": [15.41, -61.37, "Dominica"], "DO": [18.74, -70.16, "Dominican Republic"], "DZ": [28.03, 1.66, "Algeria"], "EC": [-1.83, -78.18, "Ecuador"], "EE": [58.6, 25.01, "Estonia"], "EG": [26.82, 30.8, "Egypt"], "EH": [24.22, -12.89, "Western Sahara"], "ER": [15.18, 39.78, "Eritrea"], "ES": [40.46, -3.75, "Spain"], "ET": [9.14, 40.49, "Ethiopia"], "FI": [61.92, 25.75, "Finland"], "FJ": [-16.58, 179.41, "Fiji"], "FK": [-51.8, -59.52, "Falkland Islands [Islas Malvinas]"], "FM": [7.43, 150.55, "Micronesia"], "FO": [61.89, -6.91, "Faroe Islands"], "FR": [46.23, 2.21, "France"], "GA": [-0.8, 11.61, "Gabon"], "GB": [55.38, -3.44, "United Kingdom"], "GD": [12.26, -61.6, "Grenada"], "GE": [42.32, 43.36, "Georgia"], "GF": [3.93, -53.13, "French Guiana"], "GG": [49.47, -2.59, "Guernsey"], "GH": [7.95, -1.02, "Ghana"], "GI": [36.14, -5.35, "Gibraltar"], "GL": [71.71, -42.6, "Greenland"], "GM": [13.44, -15.31, "Gambia"], "GN": [9.95, -9.7, "Guinea"], "GP": [17.0, -62.07, "Guadeloupe"], "GQ": [1.65, 10.27, "Equatorial Guinea"], "GR": [39.07, 21.82, "Greece"], "GS": [-54.43, -36.59, "South Georgia and the South Sandwich Islands"], "GT": [15.78, -90.23, "Guatemala"], "GU": [13.44, 144.79, "Guam"], "GW": [11.8, -15.18, "Guinea-Bissau"], "GY": [4.86, -58.93, "Guyana"], "GZ": [31.35, 34.31, "Gaza Strip"], "HK": [22.4, 114.11, "Hong Kong"], "HM": [-53.08, 73.5, "Heard Island and McDonald Islands"], "HN": [15.2, -86.24, "Honduras"], "HR": [45.1, 15.2, "Croatia"], "HT": [18.97, -72.29, "Haiti"], "HU": [47.16, 19.5, "Hungary"], "ID": [-0.79, 113.92, "Indonesia"], "IE": [53.41, -8.24, "Ireland"], "IL": [31.05, 34.85, "Israel"], "IM": [54.24, -4.55, "Isle of Man"], "IN": [20.59, 78.96, "India"], "IO": [-6.34, 71.88, "British Indian Ocean Territory"], "IQ": [33.22, 43.68, "Iraq"], "IR": [32.43, 53.69, "Iran"], "IS": [64.96, -19.02, "Iceland"], "IT": [41.87, 12.57, "Italy"], "JE": [49.21, -2.13, "Jersey"], "JM": [18.11, -77.3, "Jamaica"], "JO": [30.59, 36.24, "Jordan"], "JP": [36.2, 138.25, "Japan"], "KE": [-0.02, 37.91, "Kenya"], "KG": [41.2, 74.77, "Kyrgyzstan"], "KH": [12.57, 104.99, "Cambodia"], "KI": [-3.37, -168.73, "Kiribati"], "KM": [-11.88, 43.87, "Comoros"], "KN": [17.36, -62.78, "Saint Kitts and Nevis"], "KP": [40.34, 127.51, "North Korea"], "KR": [35.91, 127.77, "South Korea"], "KW": [29.31, 47.48, "Kuwait"], "KY": [19.51, -80.57, "Cayman Islands"], "KZ": [48.02, 66.92, "Kazakhstan"], "LA": [19.86, 102.5, "Laos"], "LB": [33.85, 35.86, "Lebanon"], "LC": [13.91, -60.98, "Saint Lucia"], "LI": [47.17, 9.56, "Liechtenstein"], "LK": [7.87, 80.77, "Sri Lanka"], "LR": [6.43, -9.43, "Liberia"], "LS": [-29.61, 28.23, "Lesotho"], "LT": [55.17, 23.88, "Lithuania"], "LU": [49.82, 6.13, "Luxembourg"], "LV": [56.88, 24.6, "Latvia"], "LY": [26.34, 17.23, "Libya"], "MA": [31.79, -7.09, "Morocco"], "MC": [43.75, 7.41, "Monaco"], "MD": [47.41, 28.37, "Moldova"], "ME": [42.71, 19.37, "Montenegro"], "MG": [-18.77, 46.87, "Madagascar"], "MH": [7.13, 171.18, "Marshall Islands"], "MK": [41.61, 21.75, "Macedonia [FYROM]"], "ML": [17.57, -4.0, "Mali"], "MM": [21.91, 95.96, "Myanmar [Burma]"], "MN": [46.86, 103.85, "Mongolia"], "MO": [22.2, 113.54, "Macau"], "MP": [17.33, 145.38, "Northern Mariana Islands"], "MQ": [14.64, -61.02, "Martinique"], "MR": [21.01, -10.94, "Mauritania"], "MS": [16.74, -62.19, "Montserrat"], "MT": [35.94, 14.38, "Malta"], "MU": [-20.35, 57.55, "Mauritius"], "MV": [3.2, 73.22, "Maldives"], "MW": [-13.25, 34.3, "Malawi"], "MX": [23.63, -102.55, "Mexico"], "MY": [4.21, 101.98, "Malaysia"], "MZ": [-18.67, 35.53, "Mozambique"], "NA": [-22.96, 18.49, "Namibia"], "NC": [-20.9, 165.62, "New Caledonia"], "NE": [17.61, 8.08, "Niger"], "NF": [-29.04, 167.95, "Norfolk Island"], "NG": [9.08, 8.68, "Nigeria"], "NI": [12.87, -85.21, "Nicaragua"], "NL": [52.13, 5.29, "Netherlands"], "NO": [60.47, 8.47, "Norway"], "NP": [28.39, 84.12, "Nepal"], "NR": [-0.52, 166.93, "Nauru"], "NU": [-19.05, -169.87, "Niue"], "NZ": [-40.9, 174.89, "New Zealand"], "OM": [21.51, 55.92, "Oman"], "PA": [8.54, -80.78, "Panama"], "PE": [-9.19, -75.02, "Peru"], "PF": [-17.68, -149.41, "French Polynesia"], "PG": [-6.31, 143.96, "Papua New Guinea"], "PH": [12.88, 121.77, "Philippines"], "PK": [30.38, 69.35, "Pakistan"], "PL": [51.92, 19.15, "Poland"], "PM": [46.94, -56.27, "Saint Pierre and Miquelon"], "PN": [-24.7, -127.44, "Pitcairn Islands"], "PR": [18.22, -66.59, "Puerto Rico"], "PS": [31.95, 35.23, "Palestinian Territories"], "PT": [39.4, -8.22, "Portugal"], "PW": [7.51, 134.58, "Palau"], "PY": [-23.44, -58.44, "Paraguay"], "QA": [25.35, 51.18, "Qatar"], "RE": [-21.12, 55.54, "Réunion"], "RO": [45.94, 24.97, "Romania"], "RS": [44.02, 21.01, "Serbia"], "RU": [61.52, 105.32, "Russia"], "RW": [-1.94, 29.87, "Rwanda"], "SA": [23.89, 45.08, "Saudi Arabia"], "SB": [-9.65, 160.16, "Solomon Islands"], "SC": [-4.68, 55.49, "Seychelles"], "SD": [12.86, 30.22, "Sudan"], "SE": [60.13, 18.64, "Sweden"], "SG": [1.35, 103.82, "Singapore"], "SH": [-24.14, -10.03, "Saint Helena"], "SI": [46.15, 15.0, "Slovenia"], "SJ": [77.55, 23.67, "Svalbard and Jan Mayen"], "SK": [48.67, 19.7, "Slovakia"], "SL": [8.46, -11.78, "Sierra Leone"], "SM": [43.94, 12.46, "San Marino"], "SN": [14.5, -14.45, "Senegal"], "SO": [5.15, 46.2, "Somalia"], "SR": [3.92, -56.03, "Suriname"], "ST": [0.19, 6.61, "São Tomé and Príncipe"], "SV": [13.79, -88.9, "El Salvador"], "SY": [34.8, 39.0, "Syria"], "SZ": [-26.52, 31.47, "Swaziland"], "TC": [21.69, -71.8, "Turks and Caicos Islands"], "TD": [15.45, 18.73, "Chad"], "TF": [-49.28, 69.35, "French Southern Territories"], "TG": [8.62, 0.82, "Togo"], "TH": [15.87, 100.99, "Thailand"], "TJ": [38.86, 71.28, "Tajikistan"], "TK": [-8.97, -171.86, "Tokelau"], "TL": [-8.87, 125.73, "Timor-Leste"], "TM": [38.97, 59.56, "Turkmenistan"], "TN": [33.89, 9.54, "Tunisia"], "TO": [-21.18, -175.2, "Tonga"], "TR": [38.96, 35.24, "Turkey"], "TT": [10.69, -61.22, "Trinidad and Tobago"], "TV": [-7.11, 177.65, "Tuvalu"], "TW": [23.7, 120.96, "Taiwan"], "TZ": [-6.37, 34.89, "Tanzania"], "UA": [48.38, 31.17, "Ukraine"], "UG": [1.37, 32.29, "Uganda"], "US": [37.09, -95.71, "United States"], "UY": [-32.52, -55.77, "Uruguay"], "UZ": [41.38, 64.59, "Uzbekistan"], "VA": [41.9, 12.45, "Vatican City"], "VC": [12.98, -61.29, "Saint Vincent and the Grenadines"], "VE": [6.42, -66.59, "Venezuela"], "VG": [18.42, -64.64, "British Virgin Islands"], "VI": [18.34, -64.9, "U.S. Virgin Islands"], "VN": [14.06, 108.28, "Vietnam"], "VU": [-15.38, 166.96, "Vanuatu"], "WF": [-13.77, -177.16, "Wallis and Futuna"], "WS": [-13.76, -172.1, "Samoa"], "XK": [42.6, 20.9, "Kosovo"], "YE": [15.55, 48.52, "Yemen"], "YT": [-12.83, 45.17, "Mayotte"], "ZA": [-30.56, 22.94, "South Africa"], "ZM": [-13.13, 27.85, "Zambia"], "ZW": [-19.02, 29.15, "Zimbabwe"]}};                 // {mask:{w,h,b64}, cent:{ISO2:[lat,lon,name]}}
+  var CENT = MAP.cent;
+  var Wm = MAP.mask.w, Hm = MAP.mask.h;
+  var raw = atob(MAP.mask.b64), mask = new Uint8Array(raw.length);
+  for(var i=0;i<raw.length;i++) mask[i] = raw.charCodeAt(i);
+  function isLand(lon,lat){
+    var mx=((lon+180)/360*Wm)|0, my=((90-lat)/180*Hm)|0;
+    if(mx<0)mx=0; if(mx>=Wm)mx=Wm-1; if(my<0)my=0; if(my>=Hm)my=Hm-1;
+    var idx=my*Wm+mx; return (mask[idx>>3]>>(7-(idx&7)))&1;
+  }
+  function flag(cc){
+    return /^[A-Za-z]{2}$/.test(cc)
+      ? String.fromCodePoint.apply(null,[].map.call(cc.toUpperCase(),function(c){return 0x1f1e6+c.charCodeAt(0)-65;}))
+      : '🏳️';
+  }
+
+  /* --- PREVIEW data: [ISO2, count, city?, isYou?]. Edit numbers freely. --- */
+  var MOCK = [
+    ['US',128,'New York',true],['CN',96],['JP',84],['GB',46],['DE',39],['IN',33],
+    ['CA',24],['KR',21],['FR',19],['AU',17],['SG',15],['BR',14],['NL',11],['RU',9],['IT',8],['ZA',6]
+  ];
+  function build(rows){
+    var out=[];
+    for(var i=0;i<rows.length;i++){
+      var cc=rows[i][0], c=CENT[cc]; if(!c) continue;
+      out.push({cc:cc,name:c[2],lat:c[0],lon:c[1],flag:flag(cc),count:rows[i][1],city:rows[i][2]||'',me:!!rows[i][3]});
+    }
+    return out;
+  }
+  var VISITS=[], me=null, maxC=1, total=0, youOrdinal=0;
+  function setData(rows, opts){
+    opts = opts || {};
+    VISITS = build(rows);
+    me = VISITS.filter(function(v){return v.me;})[0] || VISITS[0] || {count:0};
+    maxC = Math.max.apply(null, VISITS.map(function(v){return v.count;}).concat([1]));
+    total = (opts.total!=null) ? opts.total : VISITS.reduce(function(a,v){return a+v.count;},0);
+    youOrdinal = (opts.ordinal!=null) ? opts.ordinal : me.count;
+  }
+
+  var LAT_TOP=83, LAT_BOT=-56, W=1, H=1, dpr=1, off=null, bubbles=[];
+  function projX(lon){ return (lon+180)/360*W; }
+  function projY(lat){ return (LAT_TOP-lat)/(LAT_TOP-LAT_BOT)*H; }
+  function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+  function litAt(lon,lat){
+    var TH=10, best=0;
+    for(var k=0;k<VISITS.length;k++){
+      var dl=lon-VISITS[k].lon, da=lat-VISITS[k].lat, d=Math.sqrt(dl*dl+da*da);
+      if(d<TH){ var v=(1-d/TH)*(VISITS[k].count/maxC); if(v>best) best=v; }
+    }
+    return best;
+  }
+  function renderLand(){
+    off = document.createElement('canvas');
+    off.width = Math.round(W*dpr); off.height = Math.round(H*dpr);
+    var o = off.getContext('2d'); o.setTransform(dpr,0,0,dpr,0,0);
+    var accent=css('--accent'), faint=css('--faint');
+    var step = Math.max(5, Math.round(W/175));
+    for(var sx=step*0.5; sx<W; sx+=step){
+      var lon = sx/W*360-180;
+      for(var sy=step*0.5; sy<H; sy+=step){
+        var lat = LAT_TOP-(sy/H)*(LAT_TOP-LAT_BOT);
+        if(!isLand(lon,lat)) continue;
+        var lit = litAt(lon,lat);
+        o.beginPath(); o.arc(sx,sy, lit>0.03?1.75:1.35, 0, 6.2832);
+        if(lit>0.03){ o.fillStyle=accent; o.globalAlpha=0.20+0.65*lit; }
+        else { o.fillStyle=faint; o.globalAlpha=0.22; }
+        o.fill();
+      }
+    }
+    o.globalAlpha=1;
+  }
+  function resize(){
+    W=canvas.clientWidth; H=canvas.clientHeight; dpr=window.devicePixelRatio||1;
+    if(W<2||H<2) return;
+    canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+    renderLand();
+  }
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    if(off) ctx.drawImage(off,0,0,W,H);
+    var accent=css('--accent'); bubbles=[];
+    var pulse = reduce?0:(Math.sin((t||0)/560)+1)/2;
+    for(var b=0;b<VISITS.length;b++){
+      var v=VISITS[b], x=projX(v.lon), y=projY(v.lat), r=5+18*Math.sqrt(v.count/maxC);
+      bubbles.push({x:x,y:y,r:r,v:v});
+      var g=ctx.createRadialGradient(x,y,0,x,y,r*2.6); g.addColorStop(0,accent); g.addColorStop(1,'transparent');
+      ctx.globalAlpha=0.30; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r*2.6,0,6.2832); ctx.fill();
+      ctx.globalAlpha=0.95; ctx.fillStyle=accent; ctx.beginPath(); ctx.arc(x,y,r*0.4,0,6.2832); ctx.fill();
+      if(v.me){ ctx.globalAlpha=0.5+0.5*pulse; ctx.strokeStyle=accent; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.arc(x,y,r*0.4+6+5*pulse,0,6.2832); ctx.stroke(); }
+    }
+    ctx.globalAlpha=1;
+  }
+  function frame(t){ draw(t); requestAnimationFrame(frame); }
+  function start(){ resize(); if(reduce) draw(0); else requestAnimationFrame(frame); }
+  window.addEventListener('resize', function(){ resize(); if(reduce) draw(0); });
+  new MutationObserver(function(){ resize(); if(reduce) draw(0); })
+    .observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  if('ResizeObserver' in window){ new ResizeObserver(function(){ resize(); if(reduce) draw(0); }).observe(canvas); }
+
+  canvas.addEventListener('mousemove', function(e){
+    var rect=canvas.getBoundingClientRect(), mx=e.clientX-rect.left, my=e.clientY-rect.top, hit=null, bd=1e9;
+    for(var i=0;i<bubbles.length;i++){
+      var b=bubbles[i], dx=mx-b.x, dy=my-b.y, d=Math.sqrt(dx*dx+dy*dy);
+      if(d<Math.max(b.r*0.4+9,15) && d<bd){ bd=d; hit=b; }
+    }
+    if(hit){
+      var v=hit.v, where=v.city?(v.city+', '+v.name):v.name;
+      tip.innerHTML=v.flag+' '+where+' · <b>'+v.count+'</b> visits';
+      tip.style.left=hit.x+'px'; tip.style.top=hit.y+'px'; tip.style.opacity='1'; canvas.style.cursor='pointer';
+    } else { tip.style.opacity='0'; canvas.style.cursor='crosshair'; }
+  });
+  canvas.addEventListener('mouseleave', function(){ tip.style.opacity='0'; });
+
+  function ord(n){ var s=['th','st','nd','rd'], m=n%100; return n+(s[(m-20)%10]||s[m]||s[0]); }
+  function fmt(n){ return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+  function updateInfo(){
+    var h=new Date().getHours();
+    document.getElementById('greet').textContent=(h<5?'Good night':h<12?'Good morning':h<18?'Good afternoon':'Good evening')+' 👋';
+    document.getElementById('welcomeLine').innerHTML="You're the <b>"+ord(youOrdinal||1)+"</b> visitor — thanks for stopping by!";
+    document.getElementById('statTotal').textContent=fmt(total);
+    document.getElementById('statCountries').textContent=VISITS.length;
+  }
+  (function tick(){
+    var d=new Date(), p=function(x){return (x<10?'0':'')+x;};
+    document.getElementById('statClock').textContent=p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());
+    setTimeout(tick,1000);
+  })();
+
+  /* initial paint with demo data, then (if configured) real numbers from the Worker */
+  setData(MOCK); updateInfo(); setTimeout(start,30);
+
+  if(WORKER_URL && WORKER_URL.indexOf('http')===0){
+    fetch(WORKER_URL,{method:'GET'}).then(function(r){return r.json();}).then(function(d){
+      if(!d || !d.visits) return;
+      var youCC = d.you && d.you.country;
+      var rows = d.visits.filter(function(v){return CENT[v.country];})
+        .map(function(v){ return [v.country, v.count, (youCC===v.country && d.you.city)?d.you.city:'', v.country===youCC]; });
+      if(!rows.length) return;
+      setData(rows,{ordinal: d.you && d.you.ordinal, total: d.total});
+      updateInfo(); resize(); if(reduce) draw(0);
+    }).catch(function(){ /* keep demo data on any error */ });
+  }
+})();
+</script>
+</body>
+</html>
