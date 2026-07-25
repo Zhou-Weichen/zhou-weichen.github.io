@@ -268,8 +268,10 @@
     .sechead h2{font-size:1.3rem}
     .note{margin:-10px 0 20px}
 
-    .side{padding:26px 16px; gap:16px 20px}
-    .side .bio{min-width:0}
+    /* stack the sidebar again — as a wrapping row the bio columns collapse to one word per line */
+    .side{flex-direction:column; align-items:stretch; justify-content:flex-start; padding:26px 16px; gap:14px}
+    .side .bio{flex:0 0 auto; min-width:0}
+    .avatar{width:128px; height:128px}
     .name{font-size:2.1rem}
 
     .hero{min-height:0; padding:4px 0 28px; gap:18px}
