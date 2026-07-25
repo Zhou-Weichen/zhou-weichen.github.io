@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,12 +10,16 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%B0%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <title>Weichen Zhou</title>
+<script>
+  /* apply the remembered theme before first paint (default: light) */
+  try { var t = localStorage.getItem('wz-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 <style>
   :root{
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
     --cn:"STKaiti","KaiTi","STSong",serif;
-    /* dark theme (default) */
+    /* dark theme (applied when data-theme="dark") */
     --bg:#090B0F; --bg-2:#0C0F15;
     --ink:#EAEEF4; --muted:#98A3B2; --faint:#5B6472;
     --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
@@ -407,10 +411,9 @@
     var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     var root = document.documentElement;
 
-    /* theme toggle: default dark, remember choice */
+    /* theme toggle: default light, remember choice (saved theme is applied in <head>) */
     var KEY = 'wz-theme', btn = document.getElementById('themeBtn');
-    try { var saved = localStorage.getItem(KEY); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
-    function eff(){ return root.getAttribute('data-theme') || 'dark'; }
+    function eff(){ return root.getAttribute('data-theme') || 'light'; }
     function paint(){
       var dark = eff() === 'dark';
       btn.querySelector('.i-sun').style.display  = dark ? '' : 'none';
