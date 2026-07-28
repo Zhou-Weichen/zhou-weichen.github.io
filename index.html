@@ -494,8 +494,9 @@
 
 <script>
 /* ===== Live visitor map — precise dotted map from a baked land mask.
-   Preview uses MOCK rows (country code + count). On deploy, replace MOCK with
-   a fetch() to your Cloudflare Worker (returns {you, total, visits:[{country,count}]}). ===== */
+   All numbers come from the Cloudflare Worker (returns {you:{country,ordinal},
+   total, visits:[{country,count}]}). Until it answers — or if it fails — the
+   stats stay blank rather than showing placeholder numbers. ===== */
 (function(){
   var canvas = document.getElementById('worldmap');
   if(!canvas || !canvas.getContext) return;
@@ -520,27 +521,23 @@
       : '🏳️';
   }
 
-  /* --- PREVIEW data: [ISO2, count, city?, isYou?]. Edit numbers freely. --- */
-  var MOCK = [
-    ['US',128,'New York',true],['CN',96],['JP',84],['GB',46],['DE',39],['IN',33],
-    ['CA',24],['KR',21],['FR',19],['AU',17],['SG',15],['BR',14],['NL',11],['RU',9],['IT',8],['ZA',6]
-  ];
+  /* --- rows are [ISO2, count, isYou?] --- */
   function build(rows){
     var out=[];
     for(var i=0;i<rows.length;i++){
       var cc=rows[i][0], c=CENT[cc]; if(!c) continue;
-      out.push({cc:cc,name:c[2],lat:c[0],lon:c[1],flag:flag(cc),count:rows[i][1],city:rows[i][2]||'',me:!!rows[i][3]});
+      out.push({cc:cc,name:c[2],lat:c[0],lon:c[1],flag:flag(cc),count:rows[i][1],me:!!rows[i][2]});
     }
     return out;
   }
-  var VISITS=[], me=null, maxC=1, total=0, youOrdinal=0;
+  var VISITS=[], me=null, maxC=1, total=0, youOrdinal=0, ready=false;
   function setData(rows, opts){
     opts = opts || {};
     VISITS = build(rows);
     me = VISITS.filter(function(v){return v.me;})[0] || VISITS[0] || {count:0};
     maxC = Math.max.apply(null, VISITS.map(function(v){return v.count;}).concat([1]));
     total = (opts.total!=null) ? opts.total : VISITS.reduce(function(a,v){return a+v.count;},0);
-    youOrdinal = (opts.ordinal!=null) ? opts.ordinal : me.count;
+    youOrdinal = opts.ordinal;
   }
 
   var LAT_TOP=83, LAT_BOT=-56, W=1, H=1, dpr=1, off=null, bubbles=[];
@@ -612,8 +609,8 @@
       if(d<Math.max(b.r*0.4+9,15) && d<bd){ bd=d; hit=b; }
     }
     if(hit){
-      var v=hit.v, where=v.city?(v.city+', '+v.name):v.name;
-      tip.innerHTML=v.flag+' '+where+' · <b>'+v.count+'</b> visits';
+      var v=hit.v;
+      tip.innerHTML=v.flag+' '+v.name+' · <b>'+v.count+'</b> visits';
       tip.style.left=hit.x+'px'; tip.style.top=hit.y+'px'; tip.style.opacity='1'; canvas.style.cursor='pointer';
     } else { tip.style.opacity='0'; canvas.style.cursor='crosshair'; }
   });
@@ -624,9 +621,16 @@
   function updateInfo(){
     var h=new Date().getHours();
     document.getElementById('greet').textContent=(h<5?'Good night':h<12?'Good morning':h<18?'Good afternoon':'Good evening')+' 👋';
-    document.getElementById('welcomeLine').innerHTML="You're the <b>"+ord(youOrdinal||1)+"</b> visitor — thanks for stopping by!";
-    document.getElementById('statTotal').textContent=fmt(total);
-    document.getElementById('statCountries').textContent=VISITS.length;
+    var wl=document.getElementById('welcomeLine');
+    if(ready){
+      wl.innerHTML="You're the <b>"+ord(youOrdinal||1)+"</b> visitor — thanks for stopping by!";
+      document.getElementById('statTotal').textContent=fmt(total);
+      document.getElementById('statCountries').textContent=VISITS.length;
+    } else {
+      wl.textContent='Thanks for stopping by!';
+      document.getElementById('statTotal').textContent='—';
+      document.getElementById('statCountries').textContent='—';
+    }
   }
   (function tick(){
     var d=new Date(), p=function(x){return (x<10?'0':'')+x;};
@@ -634,19 +638,19 @@
     setTimeout(tick,1000);
   })();
 
-  /* initial paint with demo data, then (if configured) real numbers from the Worker */
-  setData(MOCK); updateInfo(); setTimeout(start,30);
+  /* empty base map first, then the real numbers from the Worker */
+  setData([]); updateInfo(); setTimeout(start,30);
 
   if(WORKER_URL && WORKER_URL.indexOf('http')===0){
     fetch(WORKER_URL,{method:'GET'}).then(function(r){return r.json();}).then(function(d){
-      if(!d || !d.visits) return;
+      if(!d || !Array.isArray(d.visits)) return;
       var youCC = d.you && d.you.country;
       var rows = d.visits.filter(function(v){return CENT[v.country];})
-        .map(function(v){ return [v.country, v.count, (youCC===v.country && d.you.city)?d.you.city:'', v.country===youCC]; });
-      if(!rows.length) return;
+        .map(function(v){ return [v.country, v.count, v.country===youCC]; });
       setData(rows,{ordinal: d.you && d.you.ordinal, total: d.total});
+      ready=true;
       updateInfo(); resize(); if(reduce) draw(0);
-    }).catch(function(){ /* keep demo data on any error */ });
+    }).catch(function(){ /* keep the blank placeholders — never show invented numbers */ });
   }
 })();
 </script>
